@@ -7,6 +7,9 @@
 #include "SocketSubsystem.h"
 #include "Interfaces/IPv4/IPv4Address.h"
 
+#include "NetworkBuffer.h"
+#include "MsgPacket.h"
+
 #define DEFAULT_SEND_BUFFER_SIZE	1024 * 128
 #define DEFAULT_RECV_BUFFER_SIZE	1024 * 128
 
@@ -16,6 +19,9 @@ FTCPConnector::FTCPConnector(FString IpAddress, int32 ServerPort)
 	this->HostAddress = IpAddress;
 	this->Port = ServerPort;
 	TickerDelegate = FTickerDelegate::CreateRaw(this, &FTCPConnector::Tick);
+
+	SendBuffer = new FSendNetworkBuffer(DEFAULT_SEND_BUFFER_SIZE);
+	RecvBuffer = new FRecvNetworkBuffer(DEFAULT_RECV_BUFFER_SIZE);
 }
 
 void FTCPConnector::Connect()
@@ -62,7 +68,8 @@ bool FTCPConnector::Tick(float DeltaTime) {
 	
 	if (ClientSocket->GetConnectionState() == SCS_Connected)
 	{
-
+		Send();
+		Recv();
 	}
 	else
 	{
@@ -76,7 +83,9 @@ bool FTCPConnector::Tick(float DeltaTime) {
 
 void FTCPConnector::SendMsgPacket(int MsgType, int MsgID, char* MsgContent, int MsgLength)
 {
-
+	UMsgPacket* Packet =  NewObject<UMsgPacket>();
+	Packet->FillPacket(MsgType, MsgID, MsgContent, MsgLength);
+	SendBuffer->AddPacket(Packet);
 }
 
 bool FTCPConnector::Send()

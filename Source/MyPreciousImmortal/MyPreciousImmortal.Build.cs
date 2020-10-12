@@ -10,7 +10,7 @@ public class MyPreciousImmortal : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "JsEnv", "UMG", "Sockets", "Networking", "NavigationSystem", "AIModule", "Json" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { });
+		PrivateDependencyModuleNames.AddRange(new string[] { "libprotobuf" });
 
 		// all plugin within this project.
 		PublicDependencyModuleNames.AddRange(new string[] {"JsEnv"});

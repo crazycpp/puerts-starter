@@ -4,6 +4,7 @@
 #include "MsgPacket.h"
 
 UMsgPacket::UMsgPacket() {
+
 }
 
 UMsgPacket::~UMsgPacket() {

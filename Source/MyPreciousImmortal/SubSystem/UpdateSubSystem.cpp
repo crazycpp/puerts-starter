@@ -2,8 +2,6 @@
 
 
 #include "UpdateSubSystem.h"
-#include "MyPreciousGameInstance.h"
-
 #include "ScriptSubsystem.h"
 
 void UUpdateSubSystem::Initialize(FSubsystemCollectionBase& Collection)

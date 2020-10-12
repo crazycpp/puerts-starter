@@ -1,0 +1,6 @@
+
+class ConfigProvider{
+    constructor(){
+        
+    }
+}

@@ -15,10 +15,10 @@ UMsgPacket::~UMsgPacket() {
 void UMsgPacket::FillPacket(int msgTypeID, int msgID, void* msgBuffer, int msgLength)
 {
 	_msgTypeId = msgTypeID;
-	msgID = msgID;
+	_msgId = msgID;
 	_msgBuffer = new char[msgLength];
 	::memcpy(_msgBuffer, msgBuffer, msgLength);
-	msgLength = msgLength;
+	_msgLength = msgLength;
 }
 
 char* UMsgPacket::GetBuffer() const

@@ -10,6 +10,10 @@
 #include "NetworkBuffer.h"
 #include "MsgPacket.h"
 
+#include "protobuf/proto_id.pb.h"
+#include "protobuf/msg.pb.h"
+#include "protobuf/db.pb.h"
+
 #define DEFAULT_SEND_BUFFER_SIZE	1024 * 128
 #define DEFAULT_RECV_BUFFER_SIZE	1024 * 128
 
@@ -154,6 +158,13 @@ bool FTCPConnector::Recv()
 
 		// 消息处理
 		// 传递到脚本层
+		UE_LOG(LogTemp, Warning, TEXT("receive msg Type:%d MsgID:%d"), pPacket->GetMsgType(), pPacket->GetMsgID());
+
+		/*
+		Proto::PlayerLoginRet protoResult;
+		protoResult.ParsePartialFromArray(pPacket->GetBuffer(), pPacket->GetDataLength());
+		protoResult.ret();
+		*/
 	}
 
 	return true;

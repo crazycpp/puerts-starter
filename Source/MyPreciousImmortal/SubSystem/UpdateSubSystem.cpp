@@ -21,7 +21,9 @@ void UUpdateSubSystem::CheckUpdate()
 void UUpdateSubSystem::OnUpdateCompleted()
 {
 	GetGameInstance()->GetSubsystem<UScriptSubsystem>()->StartUpJSEnv();
-	FTCPConnector* pConnector = new FTCPConnector("192.168.0.149", 5401);
+
+	/* To be remove from project
+	FTCPConnector* pConnector = new FTCPConnector("127.0.0.1", 5401);
 	pConnector->Connect();
 
 	Proto::PlayerLogin request;
@@ -32,4 +34,5 @@ void UUpdateSubSystem::OnUpdateCompleted()
 	char* buffer = new char[total];
 	request.SerializePartialToArray(buffer, total);
 	pConnector->SendMsgPacket(Proto::MsgTypeId::MI_Logic, (int)Proto::C2S_PlayerLogin, buffer, total);
+	*/
 }

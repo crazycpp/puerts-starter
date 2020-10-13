@@ -203,7 +203,7 @@ UMsgPacket* FRecvNetworkBuffer::GetPacket() {
 	UMsgPacket* Packet = NewObject<UMsgPacket>();
 	// 这里应该是出于性能考虑，代码微微绕
 	// 从Buffer把数据拷贝到packet中
-	MemcpyFromBuffer(Packet->GetBuffer(), dataLength);
+	//MemcpyFromBuffer(Packet->GetBuffer(), dataLength);
 	char* PacketBuffer = nullptr;
 	this->GetBuffer(PacketBuffer);
 	Packet->FillPacket(head.MsgTypeId, head.MsgId, PacketBuffer, dataLength);

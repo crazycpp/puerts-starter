@@ -51038,6 +51038,13 @@ declare module "ue" {
         static Load(InName: string): UMGManager;
     }
     
+    class MsgPacket extends Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): MsgPacket;
+        static Load(InName: string): MsgPacket;
+    }
+    
     class MyPreciousGameInstance extends GameInstance {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         GetCurrentWorld(): World;
@@ -51051,6 +51058,18 @@ declare module "ue" {
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): MyPreciousImmortalGameModeBase;
         static Load(InName: string): MyPreciousImmortalGameModeBase;
+    }
+    
+    class NetworkSubsystem extends GameInstanceSubsystem {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnConnected: $Delegate<() => void>;
+        OnDisConnected: $Delegate<() => void>;
+        OnRecvMsg: $Delegate<(MsgType: number, MsgID: number, MsgBuffer: $Ref<ArrayBuffer>) => void>;
+        SendMessage(MsgType: number, MsgID: number, MsgBuffer: ArrayBuffer): void;
+        Connect(HostAddress: string, Port: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): NetworkSubsystem;
+        static Load(InName: string): NetworkSubsystem;
     }
     
     class ScriptSubsystem extends GameInstanceSubsystem {
@@ -57267,36 +57286,6 @@ declare module "ue" {
         static Load(InName: string): SKEL_DmgTypeBP_Environmental_C;
     }
     
-    class LevelEditorOverview_C extends EditorTutorial {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): LevelEditorOverview_C;
-        static Load(InName: string): LevelEditorOverview_C;
-    }
-    
-    class SKEL_LevelEditorOverview_C extends EditorTutorial {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        UberGraphFrame: PointerToUberGraphFrame;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_LevelEditorOverview_C;
-        static Load(InName: string): SKEL_LevelEditorOverview_C;
-    }
-    
-    class BlueprintEditorTutorial_C extends EditorTutorial {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): BlueprintEditorTutorial_C;
-        static Load(InName: string): BlueprintEditorTutorial_C;
-    }
-    
-    class SKEL_BlueprintEditorTutorial_C extends EditorTutorial {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        UberGraphFrame: PointerToUberGraphFrame;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_BlueprintEditorTutorial_C;
-        static Load(InName: string): SKEL_BlueprintEditorTutorial_C;
-    }
-    
     class LevelEditorAttract_C extends EditorTutorial {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
@@ -57325,6 +57314,21 @@ declare module "ue" {
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): LauncherGameMode_C;
         static Load(InName: string): LauncherGameMode_C;
+    }
+    
+    class LevelEditorOverview_C extends EditorTutorial {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LevelEditorOverview_C;
+        static Load(InName: string): LevelEditorOverview_C;
+    }
+    
+    class SKEL_LevelEditorOverview_C extends EditorTutorial {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_LevelEditorOverview_C;
+        static Load(InName: string): SKEL_LevelEditorOverview_C;
     }
     
     class WBP_Lanucher_C extends UserWidget {

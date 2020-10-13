@@ -1,0 +1,4 @@
+
+interface IRunner{
+    Tick():void
+ } 

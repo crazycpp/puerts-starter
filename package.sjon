@@ -8,6 +8,8 @@
     "@types/react": "^15.6.6",
     "@types/react-reconciler": "^0.18.0",
     "@types/mocha": "^7.0.1"
+    "ts-protoc-gen": "^0.13.0"
+    "google-protobuf": "^3.6.1"
   },
   "devDependencies": {
   }

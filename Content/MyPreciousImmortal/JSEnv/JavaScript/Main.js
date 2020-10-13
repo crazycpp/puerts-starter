@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const puerts_1 = require("puerts");
 const UE = require("ue");
+const Proto = require("./Proto/msg_pb");
 console.log("-----------------------Game Start-----------------------------");
 class GameApp {
     constructor() { }
@@ -22,4 +23,11 @@ console.warn("to change Map......");
 // for test
 UE.GameplayStatics.OpenLevel(GameInstance.GetCurrentWorld(), "Start", true, "");
 console.warn("打印类型:", typeof (UE.MyPreciousGameInstance).name.toString());
+let loginMsg = new Proto.PlayerLogin();
+loginMsg.setChannel("cty");
+loginMsg.setServerId(111111);
+loginMsg.setUuid("windknife");
+let buff = loginMsg.serializeBinary();
+let loingRet = Proto.PlayerLogin.deserializeBinary(buff);
+console.warn("message : ", loingRet.getUuid());
 //# sourceMappingURL=Main.js.map

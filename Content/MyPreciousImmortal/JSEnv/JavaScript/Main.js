@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const puerts_1 = require("puerts");
 const UE = require("ue");
 const Proto = require("./Proto/msg_pb");
+const MsgID = require("./Proto/proto_id_pb");
 console.log("-----------------------Game Start-----------------------------");
 class GameApp {
     constructor() { }
@@ -30,4 +31,22 @@ loginMsg.setUuid("windknife");
 let buff = loginMsg.serializeBinary();
 let loingRet = Proto.PlayerLogin.deserializeBinary(buff);
 console.warn("message : ", loingRet.getUuid());
+let networkSubSystem = UE.SubSystemUtil.GetNetworkSubSystem();
+networkSubSystem.OnConnectedDelegate.Bind(() => {
+    console.warn("from script: connect to the server success");
+    networkSubSystem.SendMessage(MsgID.MsgTypeId.MI_LOGIC, MsgID.MsgId.C2S_PLAYERLOGIN, buff);
+});
+networkSubSystem.OnDisConnectedDelegate.Bind(() => {
+    console.warn("from script: disconnect from the servert");
+});
+networkSubSystem.OnRecvMsgDelegate.Bind((msgID, msgBuffer) => {
+    console.warn("receive message id :", msgID);
+    let bytes = new Uint8Array(msgBuffer);
+    for (var i = 0; i < bytes.length; i++) {
+        console.warn(i, bytes[i]);
+    }
+    let loginRet = Proto.PlayerLoginRet.deserializeBinary(bytes);
+    console.log("LoginRET:", loginRet.getRet());
+});
+networkSubSystem.Connect("192.168.0.100", 5401);
 //# sourceMappingURL=Main.js.map

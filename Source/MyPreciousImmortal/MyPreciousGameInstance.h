@@ -11,6 +11,8 @@
 
 
 
+MYPRECIOUSIMMORTAL_API UMyPreciousGameInstance* GGameInstance = nullptr;
+
 /**
  *
  */

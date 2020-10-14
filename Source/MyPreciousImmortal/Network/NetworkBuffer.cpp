@@ -12,7 +12,7 @@ FNetworkBuffer::FNetworkBuffer(const unsigned int size)
 	_beginIndex = 0;
 	_endIndex = 0;
 	_dataSize = 0;
-	_buffer = new char[_bufferSize];
+	_buffer = new uint8[_bufferSize];
 }
 
 FNetworkBuffer::~FNetworkBuffer()
@@ -83,7 +83,7 @@ void FNetworkBuffer::ReAllocBuffer(const unsigned int dataLength) {
 		std::cout << "Buffer::Realloc except!! Max size:" << _bufferSize << std::endl;
 	}
 
-	char* tempBuffer = new char[_bufferSize + ADDITIONAL_SIZE];
+	uint8* tempBuffer = new uint8[_bufferSize + ADDITIONAL_SIZE];
 	unsigned int _newEndIndex;
 	if (_beginIndex < _endIndex)
 	{
@@ -125,16 +125,17 @@ void FNetworkBuffer::ReAllocBuffer(const unsigned int dataLength) {
 //////////////////////////////////////////////////////////////////////////
 FRecvNetworkBuffer::FRecvNetworkBuffer(const unsigned int size) :FNetworkBuffer(size)
 {
-
+	
 }
 
-int FRecvNetworkBuffer::GetBuffer(char*& Buffer)const
+int FRecvNetworkBuffer::GetBuffer(uint8*& Buffer)const
 {
 	Buffer = _buffer + _endIndex;
 	return GetWriteSize();
 }
 
-void FRecvNetworkBuffer::MemcpyFromBuffer(char* pVoid, unsigned int size) {
+
+void FRecvNetworkBuffer::MemcpyFromBuffer(uint8* pVoid, unsigned int size) {
 	const auto readSize = GetReadSize();
 	if (readSize < size)
 	{
@@ -159,7 +160,7 @@ UMsgPacket* FRecvNetworkBuffer::GetPacket() {
 
 	// 1.读出 整体长度
 	unsigned short totalSize;
-	MemcpyFromBuffer(reinterpret_cast<char*>(&totalSize), sizeof(TotalSizeType));
+	MemcpyFromBuffer(reinterpret_cast<uint8*>(&totalSize), sizeof(TotalSizeType));
 
 	// 协议体长度不够，等待
 	if (_dataSize < totalSize)
@@ -172,7 +173,7 @@ UMsgPacket* FRecvNetworkBuffer::GetPacket() {
 
 	// 2.头部长
 	unsigned short headSize;
-	MemcpyFromBuffer(reinterpret_cast<char*>(&headSize), sizeof(TotalSizeType));
+	MemcpyFromBuffer(reinterpret_cast<uint8*>(&headSize), sizeof(TotalSizeType));
 	RemoveData(sizeof(TotalSizeType));
 
 	// 3.读出 PacketHead
@@ -183,30 +184,16 @@ UMsgPacket* FRecvNetworkBuffer::GetPacket() {
 	}
 
 	PacketHead head;
-	MemcpyFromBuffer(reinterpret_cast<char*>(&head), sizeof(PacketHead));
+	MemcpyFromBuffer(reinterpret_cast<uint8*>(&head), sizeof(PacketHead));
 	RemoveData(sizeof(PacketHead));
 
 	auto pHead = &head;
 
-	// 4.读出 协议
-	/*
-	Packet* pPacket = new Packet();
-	pPacket->Awake(pHead->MsgTypeId, pHead->MsgId, nullptr);
-	unsigned int dataLength = totalSize - sizeof(PacketHead) - sizeof(TotalSizeType) * 2;
-	while (pPacket->GetTotalSize() < dataLength)
-	{
-		pPacket->ReAllocBuffer();
-	}
-	*/
-
 	unsigned int dataLength = totalSize - sizeof(PacketHead) - sizeof(TotalSizeType) * 2;
 	UMsgPacket* Packet = NewObject<UMsgPacket>();
-	// 这里应该是出于性能考虑，代码微微绕
-	// 从Buffer把数据拷贝到packet中
-	//MemcpyFromBuffer(Packet->GetBuffer(), dataLength);
-	char* PacketBuffer = nullptr;
-	this->GetBuffer(PacketBuffer);
-	Packet->FillPacket(head.MsgTypeId, head.MsgId, PacketBuffer, dataLength);
+	// this->_buffer+this->_beginIndex 为实际的消息体
+	uint8* MsgBuffer = this->_buffer + _beginIndex; // 协议内容的指针
+	Packet->FillPacket(head.MsgTypeId, head.MsgId, MsgBuffer, dataLength);
 	this->RemoveData(dataLength);
 
 	return Packet;
@@ -218,7 +205,7 @@ FSendNetworkBuffer::FSendNetworkBuffer(unsigned int size):FNetworkBuffer(size)
 {
 }
 
-int FSendNetworkBuffer::GetBuffer(char*& pBuffer)const
+int FSendNetworkBuffer::GetBuffer(uint8*& pBuffer)const
 {
 	if (_dataSize <= 0)
 	{
@@ -255,7 +242,7 @@ void FSendNetworkBuffer::AddPacket(UMsgPacket* MsgPacket) {
 	const auto msgId = MsgPacket->GetMsgID();
 
 	// 1.整体长度
-	MemcpyToBuffer(reinterpret_cast<char*>(&totalSize), sizeof(TotalSizeType));
+	MemcpyToBuffer(reinterpret_cast<uint8*>(&totalSize), sizeof(TotalSizeType));
 
 	// 2.头部
 	PacketHead head{};
@@ -263,14 +250,14 @@ void FSendNetworkBuffer::AddPacket(UMsgPacket* MsgPacket) {
 	head.MsgId = MsgPacket->GetMsgID();
 
 	TotalSizeType headSize = sizeof(PacketHead);
-	MemcpyToBuffer(reinterpret_cast<char*>(&headSize), sizeof(TotalSizeType));
-	MemcpyToBuffer(reinterpret_cast<char*>(&head), sizeof(PacketHead));
+	MemcpyToBuffer(reinterpret_cast<uint8*>(&headSize), sizeof(TotalSizeType));
+	MemcpyToBuffer(reinterpret_cast<uint8*>(&head), sizeof(PacketHead));
 
 	// 3.数据
 	MemcpyToBuffer(MsgPacket->GetBuffer(), MsgPacket->GetDataLength());
 }
 
-void FSendNetworkBuffer::MemcpyToBuffer(char* pVoid, const unsigned int size)
+void FSendNetworkBuffer::MemcpyToBuffer(uint8* pVoid, const unsigned int size)
 {
 	const auto writeSize = GetWriteSize();
 	if (writeSize < size)

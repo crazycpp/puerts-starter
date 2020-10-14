@@ -17,19 +17,20 @@
 #define DEFAULT_SEND_BUFFER_SIZE	1024 * 128
 #define DEFAULT_RECV_BUFFER_SIZE	1024 * 128
 
-FTCPConnector::FTCPConnector(FString IpAddress, int32 ServerPort)
+FTCPConnector::FTCPConnector(ISocketEventHandler* EventHandler)
 {
-
-	this->HostAddress = IpAddress;
-	this->Port = ServerPort;
 	TickerDelegate = FTickerDelegate::CreateRaw(this, &FTCPConnector::Tick);
 
 	SendBuffer = new FSendNetworkBuffer(DEFAULT_SEND_BUFFER_SIZE);
 	RecvBuffer = new FRecvNetworkBuffer(DEFAULT_RECV_BUFFER_SIZE);
+
+	SocketEventHandler = EventHandler;
 }
 
-void FTCPConnector::Connect()
+void FTCPConnector::Connect(FString IpAddress, int32 ServerPort)
 {
+	this->HostAddress = IpAddress;
+	this->Port = ServerPort;
 
 	auto SocketSubSystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
 	ClientSocket = SocketSubSystem->CreateSocket(NAME_Stream, TEXT("default"), false );
@@ -45,13 +46,16 @@ void FTCPConnector::Connect()
 	InternetAddr->SetIp(Ip.Value);
 	InternetAddr->SetPort(Port);
 
+
+	// TODO: 把连接放到多线程里面去
 	bool bConnected = ClientSocket->Connect(*InternetAddr);
 	if (bConnected) 
 	{
 		ClientSocket->SetNonBlocking();
 		UE_LOG(LogStreaming, Warning, TEXT("Connect to the host successed!"));
 
-		// add ticker
+		SocketEventHandler->OnSocketConnected();
+
 		FTicker::GetCoreTicker().AddTicker(TickerDelegate);
 	}
 	else 
@@ -65,6 +69,9 @@ void FTCPConnector::DisConnect()
 	ClientSocket->Close();
 
 	FTicker::GetCoreTicker().RemoveTicker(TickerDelegate.GetHandle());
+
+	// 待定，正常关闭的话，这里应该也需要调用连接断开的事件 
+	SocketEventHandler->OnSokcetDisconnected();
 }
 
 
@@ -80,12 +87,13 @@ bool FTCPConnector::Tick(float DeltaTime) {
 		// TODO
 		// 通知逻辑层，网络连接断开
 		// 返回false，让Ticker停止掉
+		//OnSocketDisConnectedDelegate.ExecuteIfBound();
 	}
 
 	return true;
 }
 
-void FTCPConnector::SendMsgPacket(int MsgType, int MsgID, char* MsgContent, int MsgLength)
+void FTCPConnector::SendMsgPacket(int MsgType, int MsgID, uint8* MsgContent, int MsgLength)
 {
 	UMsgPacket* Packet =  NewObject<UMsgPacket>();
 	Packet->FillPacket(MsgType, MsgID, MsgContent, MsgLength);
@@ -98,7 +106,7 @@ bool FTCPConnector::Send()
 		return false;
 
 	while (true) {
-		char* pBuffer = nullptr;
+		uint8* pBuffer = nullptr;
 		const int needSendSize = SendBuffer->GetBuffer(pBuffer);
 
 		// 没有数据可发送
@@ -124,14 +132,11 @@ bool FTCPConnector::Send()
 
 bool FTCPConnector::Recv()
 {
-	if (ClientSocket->GetConnectionState() != SCS_Connected)
+	if (ClientSocket->GetConnectionState() != SCS_Connected) {
 		return false;
+	}
 
-	//if (!_pFSocket->HasPendingData(_iPendingDataSize))
-	//	return false;
-
-	bool isRs = false;
-	char* pBuffer = nullptr;
+	uint8* pBuffer = nullptr;
 	while (true)
 	{
 		// 总空间数据不足一个头的大小，扩容
@@ -142,29 +147,29 @@ bool FTCPConnector::Recv()
 
 		const int emptySize = RecvBuffer->GetBuffer(pBuffer);
 		if (!ClientSocket->Recv((uint8*)pBuffer, emptySize, BytesReaded))
+		{
 			break;
+		}
 
 		if (BytesReaded <= 0)
+		{
 			break;
+		}
 
 		RecvBuffer->FillData(BytesReaded);
 	}
 
 	while (true)
 	{
-		const auto pPacket = RecvBuffer->GetPacket();
-		if (pPacket == nullptr)
+		const UMsgPacket* Packet = RecvBuffer->GetPacket();
+		if (Packet == nullptr) {
 			break;
+		}
 
-		// 消息处理
-		// 传递到脚本层
-		UE_LOG(LogTemp, Warning, TEXT("receive msg Type:%d MsgID:%d"), pPacket->GetMsgType(), pPacket->GetMsgID());
-
-		/*
-		Proto::PlayerLoginRet protoResult;
-		protoResult.ParsePartialFromArray(pPacket->GetBuffer(), pPacket->GetDataLength());
-		protoResult.ret();
-		*/
+		FArrayBuffer Buffer;
+		Buffer.Data = Packet->GetBuffer();
+		Buffer.Length = Packet->GetDataLength();
+		SocketEventHandler->OnRecvMessage(Packet->GetMsgID(), Buffer);
 	}
 
 	return true;

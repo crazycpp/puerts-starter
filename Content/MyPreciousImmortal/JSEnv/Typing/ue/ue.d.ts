@@ -51062,9 +51062,9 @@ declare module "ue" {
     
     class NetworkSubsystem extends GameInstanceSubsystem {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnConnected: $Delegate<() => void>;
-        OnDisConnected: $Delegate<() => void>;
-        OnRecvMsg: $Delegate<(MsgType: number, MsgID: number, MsgBuffer: $Ref<ArrayBuffer>) => void>;
+        OnConnectedDelegate: $Delegate<() => void>;
+        OnDisConnectedDelegate: $Delegate<() => void>;
+        OnRecvMsgDelegate: $Delegate<(MsgID: number, MsgBuffer: ArrayBuffer) => void>;
         SendMessage(MsgType: number, MsgID: number, MsgBuffer: ArrayBuffer): void;
         Connect(HostAddress: string, Port: number): void;
         static StaticClass(): Class;
@@ -51077,6 +51077,14 @@ declare module "ue" {
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): ScriptSubsystem;
         static Load(InName: string): ScriptSubsystem;
+    }
+    
+    class SubSystemUtil extends BlueprintFunctionLibrary {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static GetNetworkSubSystem(): NetworkSubsystem;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SubSystemUtil;
+        static Load(InName: string): SubSystemUtil;
     }
     
     class UpdateSubSystem extends GameInstanceSubsystem {
@@ -57329,6 +57337,79 @@ declare module "ue" {
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): SKEL_LevelEditorOverview_C;
         static Load(InName: string): SKEL_LevelEditorOverview_C;
+    }
+    
+    class StandardMacros_C extends Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): StandardMacros_C;
+        static Load(InName: string): StandardMacros_C;
+    }
+    
+    class SKEL_StandardMacros_C extends Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_StandardMacros_C;
+        static Load(InName: string): SKEL_StandardMacros_C;
+    }
+    
+    class BP_Sky_Sphere_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        SkySphereMesh: StaticMeshComponent;
+        Base: SceneComponent;
+        Skymaterial: MaterialInstanceDynamic;
+        Refreshmaterial: boolean;
+        Directionallightactor: DirectionalLight;
+        Colorsdeterminedbysunposition: boolean;
+        Sunheight: number;
+        Sunbrightness: number;
+        HorizonFalloff: number;
+        ZenithColor: LinearColor;
+        Horizoncolor: LinearColor;
+        Cloudcolor: LinearColor;
+        OverallColor: LinearColor;
+        Cloudspeed: number;
+        Cloudopacity: number;
+        Starsbrightness: number;
+        Horizoncolorcurve: CurveLinearColor;
+        Zenithcolorcurve: CurveLinearColor;
+        Cloudcolorcurve: CurveLinearColor;
+        RefreshMaterial(): void;
+        UpdateSunDirection(): void;
+        UserConstructionScript(): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BP_Sky_Sphere_C;
+        static Load(InName: string): BP_Sky_Sphere_C;
+    }
+    
+    class SKEL_BP_Sky_Sphere_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        SkySphereMesh: StaticMeshComponent;
+        Base: SceneComponent;
+        Skymaterial: MaterialInstanceDynamic;
+        Refreshmaterial: boolean;
+        Directionallightactor: DirectionalLight;
+        Colorsdeterminedbysunposition: boolean;
+        Sunheight: number;
+        Sunbrightness: number;
+        HorizonFalloff: number;
+        ZenithColor: LinearColor;
+        Horizoncolor: LinearColor;
+        Cloudcolor: LinearColor;
+        OverallColor: LinearColor;
+        Cloudspeed: number;
+        Cloudopacity: number;
+        Starsbrightness: number;
+        Horizoncolorcurve: CurveLinearColor;
+        Zenithcolorcurve: CurveLinearColor;
+        Cloudcolorcurve: CurveLinearColor;
+        UserConstructionScript(): void;
+        UpdateSunDirection(): void;
+        RefreshMaterial(): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_BP_Sky_Sphere_C;
+        static Load(InName: string): SKEL_BP_Sky_Sphere_C;
     }
     
     class WBP_Lanucher_C extends UserWidget {

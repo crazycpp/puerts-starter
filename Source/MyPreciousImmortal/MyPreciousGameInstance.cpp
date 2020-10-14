@@ -6,6 +6,7 @@
 void UMyPreciousGameInstance::Init()
 {
 	Super::Init();
+	GGameInstance = this;
 }
 
 void UMyPreciousGameInstance::OnStart()

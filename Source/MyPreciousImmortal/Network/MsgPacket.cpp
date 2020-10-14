@@ -16,12 +16,12 @@ void UMsgPacket::FillPacket(int msgTypeID, int msgID, void* msgBuffer, int msgLe
 {
 	_msgTypeId = msgTypeID;
 	_msgId = msgID;
-	_msgBuffer = new char[msgLength];
+	_msgBuffer = new uint8[msgLength];
 	::memcpy(_msgBuffer, msgBuffer, msgLength);
 	_msgLength = msgLength;
 }
 
-char* UMsgPacket::GetBuffer() const
+uint8* UMsgPacket::GetBuffer() const
 {
 	return _msgBuffer;
 }

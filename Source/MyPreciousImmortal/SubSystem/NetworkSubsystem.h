@@ -9,14 +9,14 @@
 
 #include "NetworkSubsystem.generated.h"
 
-
+// 要传到脚本的Delegates
 DECLARE_DYNAMIC_DELEGATE(FOnConnected);
 DECLARE_DYNAMIC_DELEGATE(FOnDisConnected);
-DECLARE_DYNAMIC_DELEGATE_ThreeParams(FOnRecvMsg, int32, MsgType, int32, MsgID, FArrayBuffer&, MsgBuffer);
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnRecvMsg, int32, MsgID, FArrayBuffer, MsgBuffer);
 
 
 UCLASS()
-class MYPRECIOUSIMMORTAL_API UNetworkSubsystem : public UGameInstanceSubsystem
+class MYPRECIOUSIMMORTAL_API UNetworkSubsystem : public UGameInstanceSubsystem, public ISocketEventHandler
 {
 	GENERATED_BODY()
 
@@ -25,22 +25,31 @@ public:
 
 	virtual void Deinitialize()override;
 
+	virtual void BeginDestroy()override;
+
+	virtual void OnSocketConnected()override;
+
+	virtual void OnSokcetDisconnected()override;
+	
+	virtual void OnRecvMessage(int MsgID, FArrayBuffer& ArrayBuffer)override;
+
+
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect", ScriptName = "UNetworkSubsystem", Keywords = "network"), Category = "network")
 	void Connect(const FString& HostAddress, const int Port);
 
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect", ScriptName = "UNetworkSubsystem", Keywords = "network"), Category = "network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "SendMessage", ScriptName = "UNetworkSubsystem", Keywords = "network"), Category = "network")
 	void SendMessage(int MsgType, int MsgID, const FArrayBuffer& MsgBuffer)const;
 
 private:
 	UPROPERTY()
-	FOnConnected OnConnected;
+	FOnConnected OnConnectedDelegate;
 
 	UPROPERTY()
-	FOnConnected OnDisConnected;
+	FOnConnected OnDisConnectedDelegate;
 
 	UPROPERTY()
-	FOnRecvMsg	OnRecvMsg;
+	FOnRecvMsg	OnRecvMsgDelegate;
 
 	TSharedPtr<FTCPConnector> TCPConnector;
 };

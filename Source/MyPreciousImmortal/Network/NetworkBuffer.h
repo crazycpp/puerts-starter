@@ -42,7 +42,7 @@ protected:
 	// 重合时有两种可能，一种是没有数据，另一种是满数据
 	unsigned int _dataSize; // 有效数据
 
-	char* _buffer{ nullptr };
+	uint8* _buffer{ nullptr };
 	unsigned int _beginIndex{ 0 }; // buffer数据 开始位与结束位
 	unsigned int _endIndex{ 0 };
 
@@ -54,20 +54,20 @@ class FRecvNetworkBuffer : public FNetworkBuffer
 {
 public:
 	FRecvNetworkBuffer(unsigned int _size);
-	int GetBuffer(char*& pBuffer) const;
+	int GetBuffer(uint8*& pBuffer) const;
 	UMsgPacket* GetPacket();
 
 private:
-	void MemcpyFromBuffer(char* pVoid, unsigned int size);
+	void MemcpyFromBuffer(uint8* pVoid, unsigned int size);
 };
 
 class FSendNetworkBuffer : public FNetworkBuffer
 {
 public:
 	FSendNetworkBuffer(unsigned int size);
-	int GetBuffer(char*& pBuffer) const;
+	int GetBuffer(uint8*& pBuffer) const;
 	void AddPacket(UMsgPacket* pPacket);
 
 private:
-	void MemcpyToBuffer(char* pVoid, unsigned int size);
+	void MemcpyToBuffer(uint8* pVoid, unsigned int size);
 };

@@ -19,7 +19,7 @@ public:
 	~UMsgPacket();
 
 	void FillPacket(int msgTypeID, int msgID, void* msgBuffer, int msgLength);
-	char* GetBuffer()const;
+	uint8* GetBuffer()const;
 	unsigned short GetDataLength()const;
 
 	int GetMsgID()const;
@@ -29,5 +29,5 @@ private:
 	int _msgTypeId;
 	int _msgId;
 	unsigned short _msgLength;
-	char* _msgBuffer{ nullptr };
+	uint8* _msgBuffer{ nullptr };
 };

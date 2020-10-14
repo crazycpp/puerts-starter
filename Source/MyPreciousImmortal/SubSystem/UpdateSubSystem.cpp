@@ -21,18 +21,4 @@ void UUpdateSubSystem::CheckUpdate()
 void UUpdateSubSystem::OnUpdateCompleted()
 {
 	GetGameInstance()->GetSubsystem<UScriptSubsystem>()->StartUpJSEnv();
-
-	/* To be remove from project
-	FTCPConnector* pConnector = new FTCPConnector("127.0.0.1", 5401);
-	pConnector->Connect();
-
-	Proto::PlayerLogin request;
-	request.set_server_id(1);
-	request.set_channel("pc");
-	request.set_uuid("windknife");
-	int total = request.ByteSizeLong();
-	char* buffer = new char[total];
-	request.SerializePartialToArray(buffer, total);
-	pConnector->SendMsgPacket(Proto::MsgTypeId::MI_Logic, (int)Proto::C2S_PlayerLogin, buffer, total);
-	*/
 }

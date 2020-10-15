@@ -1,5 +1,5 @@
 
-class ConfigProvider{
+export class ConfigProvider{
     constructor(){
         
     }

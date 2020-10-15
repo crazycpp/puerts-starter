@@ -51074,6 +51074,7 @@ declare module "ue" {
     
     class ScriptSubsystem extends GameInstanceSubsystem {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnGameTick: $Delegate<(DeltaTime: number) => void>;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): ScriptSubsystem;
         static Load(InName: string): ScriptSubsystem;
@@ -51081,6 +51082,7 @@ declare module "ue" {
     
     class SubSystemUtil extends BlueprintFunctionLibrary {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static GetScriptSubSystem(): ScriptSubsystem;
         static GetNetworkSubSystem(): NetworkSubsystem;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): SubSystemUtil;
@@ -55931,6 +55933,13 @@ declare module "ue" {
         static Load(InName: string): MonoWaveTableSynthPresetFactory;
     }
     
+    class RichTextBlockInlineDecorator extends RichTextBlockDecorator {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): RichTextBlockInlineDecorator;
+        static Load(InName: string): RichTextBlockInlineDecorator;
+    }
+    
     class MockAI extends Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         BBComp: BlackboardComponent;
@@ -57412,6 +57421,99 @@ declare module "ue" {
         static Load(InName: string): SKEL_BP_Sky_Sphere_C;
     }
     
+    class RenderToTextureFunctionLibrary_C extends BlueprintFunctionLibrary {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static SetCanvasMaterialScaleandPosition(Size: Vector2D, Position: Vector2D, Scale: number, __WorldContext: Object, ScreenPosition: $Ref<Vector2D>, ScreenSize: $Ref<Vector2D>): void;
+        static ArraytoHLSLIntArray(Type: number, VariableName: $Ref<string>, int: $Ref<TArray<number>>, int2: $Ref<TArray<Vector2D>>, int3: $Ref<TArray<Vector>>, int4: $Ref<TArray<LinearColor>>, __WorldContext: Object, String: $Ref<string>): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): RenderToTextureFunctionLibrary_C;
+        static Load(InName: string): RenderToTextureFunctionLibrary_C;
+    }
+    
+    class SKEL_RenderToTextureFunctionLibrary_C extends BlueprintFunctionLibrary {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static ArraytoHLSLIntArray(Type: number, VariableName: $Ref<string>, int: $Ref<TArray<number>>, int2: $Ref<TArray<Vector2D>>, int3: $Ref<TArray<Vector>>, int4: $Ref<TArray<LinearColor>>, __WorldContext: Object, String: $Ref<string>): void;
+        static SetCanvasMaterialScaleandPosition(Size: Vector2D, Position: Vector2D, Scale: number, __WorldContext: Object, ScreenPosition: $Ref<Vector2D>, ScreenSize: $Ref<Vector2D>): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_RenderToTextureFunctionLibrary_C;
+        static Load(InName: string): SKEL_RenderToTextureFunctionLibrary_C;
+    }
+    
+    class Tutorial_BP_MacroLib_C extends EditorTutorial {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): Tutorial_BP_MacroLib_C;
+        static Load(InName: string): Tutorial_BP_MacroLib_C;
+    }
+    
+    class SKEL_Tutorial_BP_MacroLib_C extends EditorTutorial {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_Tutorial_BP_MacroLib_C;
+        static Load(InName: string): SKEL_Tutorial_BP_MacroLib_C;
+    }
+    
+    class RenderToTextureMacros_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): RenderToTextureMacros_C;
+        static Load(InName: string): RenderToTextureMacros_C;
+    }
+    
+    class SKEL_RenderToTextureMacros_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_RenderToTextureMacros_C;
+        static Load(InName: string): SKEL_RenderToTextureMacros_C;
+    }
+    
+    class PROTO_BP_Blueprint_0_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        DefaultSceneRoot: SceneComponent;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): PROTO_BP_Blueprint_0_C;
+        static Load(InName: string): PROTO_BP_Blueprint_0_C;
+    }
+    
+    class SKEL_PROTO_BP_Blueprint_0_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        DefaultSceneRoot: SceneComponent;
+        UserConstructionScript(): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_PROTO_BP_Blueprint_0_C;
+        static Load(InName: string): SKEL_PROTO_BP_Blueprint_0_C;
+    }
+    
+    class ActorMacros_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): ActorMacros_C;
+        static Load(InName: string): ActorMacros_C;
+    }
+    
+    class SKEL_ActorMacros_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_ActorMacros_C;
+        static Load(InName: string): SKEL_ActorMacros_C;
+    }
+    
+    class BlueprintEditorTutorial_C extends EditorTutorial {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BlueprintEditorTutorial_C;
+        static Load(InName: string): BlueprintEditorTutorial_C;
+    }
+    
+    class SKEL_BlueprintEditorTutorial_C extends EditorTutorial {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_BlueprintEditorTutorial_C;
+        static Load(InName: string): SKEL_BlueprintEditorTutorial_C;
+    }
+    
     class WBP_Lanucher_C extends UserWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         UberGraphFrame: PointerToUberGraphFrame;
@@ -57433,6 +57535,55 @@ declare module "ue" {
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): SKEL_WBP_Lanucher_C;
         static Load(InName: string): SKEL_WBP_Lanucher_C;
+    }
+    
+    class WBP_LoginPanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        Account: EditableTextBox;
+        BtnLogin: Button;
+        EditableText_201: EditableText;
+        HostAddress: EditableTextBox;
+        Port: EditableTextBox;
+        BndEvt__BtnLogin_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature(): void;
+        ExecuteUbergraph_WBP_LoginPanel(EntryPoint: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WBP_LoginPanel_C;
+        static Load(InName: string): WBP_LoginPanel_C;
+    }
+    
+    class SKEL_WBP_LoginPanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        Account: EditableTextBox;
+        BtnLogin: Button;
+        EditableText_201: EditableText;
+        HostAddress: EditableTextBox;
+        Port: EditableTextBox;
+        BndEvt__BtnLogin_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature(): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_LoginPanel_C;
+        static Load(InName: string): SKEL_WBP_LoginPanel_C;
+    }
+    
+    class SKEL_PROTO_BP_AnimBlueprint_0_C extends AnimInstance {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        AnimGraph(AnimGraph: $Ref<PoseLink>): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_PROTO_BP_AnimBlueprint_0_C;
+        static Load(InName: string): SKEL_PROTO_BP_AnimBlueprint_0_C;
+    }
+    
+    class PROTO_BP_AnimBlueprint_0_C extends AnimInstance {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        AnimGraphNode_Root: AnimNode_Root;
+        AnimGraph(AnimGraph: $Ref<PoseLink>): void;
+        ExecuteUbergraph_PROTO_BP_AnimBlueprint_0(EntryPoint: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): PROTO_BP_AnimBlueprint_0_C;
+        static Load(InName: string): PROTO_BP_AnimBlueprint_0_C;
     }
     
 }

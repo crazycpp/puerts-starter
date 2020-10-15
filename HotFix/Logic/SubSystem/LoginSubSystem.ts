@@ -1,5 +1,19 @@
+import { ISubSystem } from "./ISubSystem";
 
+export class LoginSubSystem implements ISubSystem{
 
-    export class LoginSubSystem{
-        constructor(){}
+    constructor()
+    {
+
     }
+
+    Initialize():void
+    {
+        console.log("yes I got it!");
+    }
+
+    Reset():void
+    {
+
+    }
+}

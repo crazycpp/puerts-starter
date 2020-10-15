@@ -66,3 +66,7 @@ exports.WBP_Lanucher_C = 'WBP_Lanucher_C';
 exports.lazyloadComponents.WBP_Lanucher_C = '/Game/MyPreciousImmortal/Core/UI/WBP_Lanucher.WBP_Lanucher_C';
 exports.SKEL_WBP_Lanucher_C = 'SKEL_WBP_Lanucher_C';
 exports.lazyloadComponents.SKEL_WBP_Lanucher_C = '/Game/MyPreciousImmortal/Core/UI/WBP_Lanucher.SKEL_WBP_Lanucher_C';
+exports.WBP_LoginPanel_C = 'WBP_LoginPanel_C';
+exports.lazyloadComponents.WBP_LoginPanel_C = '/Game/MyPreciousImmortal/Core/UI/WBP_LoginPanel.WBP_LoginPanel_C';
+exports.SKEL_WBP_LoginPanel_C = 'SKEL_WBP_LoginPanel_C';
+exports.lazyloadComponents.SKEL_WBP_LoginPanel_C = '/Game/MyPreciousImmortal/Core/UI/WBP_LoginPanel.SKEL_WBP_LoginPanel_C';

@@ -1,10 +1,24 @@
-import { prototype } from 'mocha';
 import {$ref, $unref, $set, argv, requestJitModuleMethod, makeUClass, blueprint} from 'puerts';
 import * as UE from 'ue'
 
-import * as Proto from "./Proto/msg_pb"
-import * as MsgID from "./Proto/proto_id_pb"
+import {TSGame} from "./App/TSGame"
 
+
+let GameInstance = argv.getByName("GameInstance") as UE.MyPreciousGameInstance;
+let Game : TSGame = new TSGame(GameInstance);
+
+Game.Initialize();
+Game.Run();
+
+
+
+
+
+
+
+
+
+/*
 console.log("-----------------------Game Start-----------------------------");
 
 
@@ -81,4 +95,11 @@ networkSubSystem.OnRecvMsgDelegate.Bind((msgID, msgBuffer)=>{
 })
  
 networkSubSystem.Connect("192.168.0.100", 5401);
- 
+
+
+let ScriptSubSystem = UE.SubSystemUtil.GetScriptSubSystem();
+
+ScriptSubSystem.OnGameTick.Bind((DeltaTime)=>{
+    console.log("tick in script", DeltaTime);
+})
+*/

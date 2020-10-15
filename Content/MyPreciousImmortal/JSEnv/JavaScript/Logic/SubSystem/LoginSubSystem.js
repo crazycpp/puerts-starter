@@ -2,7 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginSubSystem = void 0;
 class LoginSubSystem {
-    constructor() { }
+    constructor() {
+    }
+    Initialize() {
+        console.log("yes I got it!");
+    }
+    Reset() {
+    }
 }
 exports.LoginSubSystem = LoginSubSystem;
 //# sourceMappingURL=LoginSubSystem.js.map

@@ -1295,6 +1295,18 @@ export interface SKEL_WBP_Lanucher_CProps extends UserWidgetProps {
 
 export class SKEL_WBP_Lanucher_C extends React.Component<SKEL_WBP_Lanucher_CProps> {}
 
+export interface WBP_LoginPanel_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class WBP_LoginPanel_C extends React.Component<WBP_LoginPanel_CProps> {}
+
+export interface SKEL_WBP_LoginPanel_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_LoginPanel_C extends React.Component<SKEL_WBP_LoginPanel_CProps> {}
+
 
 interface Root {
     removeFromViewport() : void;

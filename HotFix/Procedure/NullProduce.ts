@@ -1,8 +1,11 @@
-import { IProduce } from "./IProduce";
+import { SubSystemLocator } from "../Logic/SubSystemLocator";
+import { UIType } from "../UI/UIConfig";
+import { IProduce, ProduceType } from "./IProduce";
 
 export class NullProduce implements IProduce{
 
     OnEnter():void{
+        SubSystemLocator.GetUISubSystem().OpenPanel(UIType.CreateRole);
     }
 
     OnTick(DeltaTime : number):void{
@@ -11,5 +14,9 @@ export class NullProduce implements IProduce{
 
     OnExit():void{
 
+    }
+
+    GetProduceType():ProduceType{
+        return ProduceType.Empty;
     }
 }

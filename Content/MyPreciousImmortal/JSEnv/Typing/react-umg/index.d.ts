@@ -1307,6 +1307,22 @@ export interface SKEL_WBP_LoginPanel_CProps extends UserWidgetProps {
 
 export class SKEL_WBP_LoginPanel_C extends React.Component<SKEL_WBP_LoginPanel_CProps> {}
 
+export interface WBP_CreateRolePanel_CProps extends UserWidgetProps {
+}
+
+export class WBP_CreateRolePanel_C extends React.Component<WBP_CreateRolePanel_CProps> {}
+
+export interface SKEL_WBP_CreateRolePanel_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_CreateRolePanel_C extends React.Component<SKEL_WBP_CreateRolePanel_CProps> {}
+
+export interface REINST_WBP_CreateRolePanel_C_9Props extends UserWidgetProps {
+}
+
+export class REINST_WBP_CreateRolePanel_C_9 extends React.Component<REINST_WBP_CreateRolePanel_C_9Props> {}
+
 
 interface Root {
     removeFromViewport() : void;

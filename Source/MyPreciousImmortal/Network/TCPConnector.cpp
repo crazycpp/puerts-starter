@@ -10,10 +10,6 @@
 #include "NetworkBuffer.h"
 #include "MsgPacket.h"
 
-#include "protobuf/proto_id.pb.h"
-#include "protobuf/msg.pb.h"
-#include "protobuf/db.pb.h"
-
 #define DEFAULT_SEND_BUFFER_SIZE	1024 * 128
 #define DEFAULT_RECV_BUFFER_SIZE	1024 * 128
 

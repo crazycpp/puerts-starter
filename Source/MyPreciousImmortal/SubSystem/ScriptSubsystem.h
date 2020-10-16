@@ -8,6 +8,9 @@
 #include "ScriptSubsystem.generated.h"
 
 
+
+DECLARE_DYNAMIC_DELEGATE_OneParam(FScriptEngineTicker, float, DeltaTime);
+
 /**
  * 
  */
@@ -18,11 +21,20 @@ class MYPRECIOUSIMMORTAL_API UScriptSubsystem : public UGameInstanceSubsystem
 	
 public :
 
+	virtual void Initialize(FSubsystemCollectionBase& Collection)override;
+
+	virtual void Deinitialize() override;
 	// Æô¶¯JS»·¾³
 	void StartUpJSEnv();
 
-	virtual void Deinitialize() override;
+	bool Tick(float DeltaTime);
 
 private:
 	TSharedPtr<puerts::FJsEnv> GameScript;
+
+	UPROPERTY()
+	// support for script sandbox tick
+	FScriptEngineTicker OnGameTick;
+
+	FTickerDelegate TickerDelegate;
 };

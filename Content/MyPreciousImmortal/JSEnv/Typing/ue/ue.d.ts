@@ -57348,6 +57348,13 @@ declare module "ue" {
         static Load(InName: string): SKEL_LevelEditorOverview_C;
     }
     
+    class SKEL_ActorMacros_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_ActorMacros_C;
+        static Load(InName: string): SKEL_ActorMacros_C;
+    }
+    
     class StandardMacros_C extends Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
@@ -57362,63 +57369,18 @@ declare module "ue" {
         static Load(InName: string): SKEL_StandardMacros_C;
     }
     
-    class BP_Sky_Sphere_C extends Actor {
+    class Tutorial_BP_MacroLib_C extends EditorTutorial {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        SkySphereMesh: StaticMeshComponent;
-        Base: SceneComponent;
-        Skymaterial: MaterialInstanceDynamic;
-        Refreshmaterial: boolean;
-        Directionallightactor: DirectionalLight;
-        Colorsdeterminedbysunposition: boolean;
-        Sunheight: number;
-        Sunbrightness: number;
-        HorizonFalloff: number;
-        ZenithColor: LinearColor;
-        Horizoncolor: LinearColor;
-        Cloudcolor: LinearColor;
-        OverallColor: LinearColor;
-        Cloudspeed: number;
-        Cloudopacity: number;
-        Starsbrightness: number;
-        Horizoncolorcurve: CurveLinearColor;
-        Zenithcolorcurve: CurveLinearColor;
-        Cloudcolorcurve: CurveLinearColor;
-        RefreshMaterial(): void;
-        UpdateSunDirection(): void;
-        UserConstructionScript(): void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): BP_Sky_Sphere_C;
-        static Load(InName: string): BP_Sky_Sphere_C;
+        static Find(OrigInName: string, Outer?: Object): Tutorial_BP_MacroLib_C;
+        static Load(InName: string): Tutorial_BP_MacroLib_C;
     }
     
-    class SKEL_BP_Sky_Sphere_C extends Actor {
+    class SKEL_Tutorial_BP_MacroLib_C extends EditorTutorial {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        UberGraphFrame: PointerToUberGraphFrame;
-        SkySphereMesh: StaticMeshComponent;
-        Base: SceneComponent;
-        Skymaterial: MaterialInstanceDynamic;
-        Refreshmaterial: boolean;
-        Directionallightactor: DirectionalLight;
-        Colorsdeterminedbysunposition: boolean;
-        Sunheight: number;
-        Sunbrightness: number;
-        HorizonFalloff: number;
-        ZenithColor: LinearColor;
-        Horizoncolor: LinearColor;
-        Cloudcolor: LinearColor;
-        OverallColor: LinearColor;
-        Cloudspeed: number;
-        Cloudopacity: number;
-        Starsbrightness: number;
-        Horizoncolorcurve: CurveLinearColor;
-        Zenithcolorcurve: CurveLinearColor;
-        Cloudcolorcurve: CurveLinearColor;
-        UserConstructionScript(): void;
-        UpdateSunDirection(): void;
-        RefreshMaterial(): void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_BP_Sky_Sphere_C;
-        static Load(InName: string): SKEL_BP_Sky_Sphere_C;
+        static Find(OrigInName: string, Outer?: Object): SKEL_Tutorial_BP_MacroLib_C;
+        static Load(InName: string): SKEL_Tutorial_BP_MacroLib_C;
     }
     
     class RenderToTextureFunctionLibrary_C extends BlueprintFunctionLibrary {
@@ -57439,34 +57401,6 @@ declare module "ue" {
         static Load(InName: string): SKEL_RenderToTextureFunctionLibrary_C;
     }
     
-    class Tutorial_BP_MacroLib_C extends EditorTutorial {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): Tutorial_BP_MacroLib_C;
-        static Load(InName: string): Tutorial_BP_MacroLib_C;
-    }
-    
-    class SKEL_Tutorial_BP_MacroLib_C extends EditorTutorial {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_Tutorial_BP_MacroLib_C;
-        static Load(InName: string): SKEL_Tutorial_BP_MacroLib_C;
-    }
-    
-    class RenderToTextureMacros_C extends Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): RenderToTextureMacros_C;
-        static Load(InName: string): RenderToTextureMacros_C;
-    }
-    
-    class SKEL_RenderToTextureMacros_C extends Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_RenderToTextureMacros_C;
-        static Load(InName: string): SKEL_RenderToTextureMacros_C;
-    }
-    
     class PROTO_BP_Blueprint_0_C extends Actor {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         DefaultSceneRoot: SceneComponent;
@@ -57485,18 +57419,18 @@ declare module "ue" {
         static Load(InName: string): SKEL_PROTO_BP_Blueprint_0_C;
     }
     
-    class ActorMacros_C extends Actor {
+    class RenderToTextureMacros_C extends Actor {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): ActorMacros_C;
-        static Load(InName: string): ActorMacros_C;
+        static Find(OrigInName: string, Outer?: Object): RenderToTextureMacros_C;
+        static Load(InName: string): RenderToTextureMacros_C;
     }
     
-    class SKEL_ActorMacros_C extends Actor {
+    class SKEL_RenderToTextureMacros_C extends Actor {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_ActorMacros_C;
-        static Load(InName: string): SKEL_ActorMacros_C;
+        static Find(OrigInName: string, Outer?: Object): SKEL_RenderToTextureMacros_C;
+        static Load(InName: string): SKEL_RenderToTextureMacros_C;
     }
     
     class BlueprintEditorTutorial_C extends EditorTutorial {
@@ -57512,6 +57446,13 @@ declare module "ue" {
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): SKEL_BlueprintEditorTutorial_C;
         static Load(InName: string): SKEL_BlueprintEditorTutorial_C;
+    }
+    
+    class ActorMacros_C extends Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): ActorMacros_C;
+        static Load(InName: string): ActorMacros_C;
     }
     
     class WBP_Lanucher_C extends UserWidget {
@@ -57564,6 +57505,54 @@ declare module "ue" {
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): SKEL_WBP_LoginPanel_C;
         static Load(InName: string): SKEL_WBP_LoginPanel_C;
+    }
+    
+    class WBP_CreateRolePanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        BtnCreate: Button;
+        CheckBox_female: CheckBox;
+        CheckBox_male: CheckBox;
+        EditableTextBoxName: EditableTextBox;
+        Image_blank: Image;
+        Image_female: Image;
+        Image_male: Image;
+        ImgRole: Image;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WBP_CreateRolePanel_C;
+        static Load(InName: string): WBP_CreateRolePanel_C;
+    }
+    
+    class SKEL_WBP_CreateRolePanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        BtnCreate: Button;
+        CheckBox_female: CheckBox;
+        CheckBox_male: CheckBox;
+        EditableTextBoxName: EditableTextBox;
+        Image_blank: Image;
+        Image_female: Image;
+        Image_male: Image;
+        ImgRole: Image;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_CreateRolePanel_C;
+        static Load(InName: string): SKEL_WBP_CreateRolePanel_C;
+    }
+    
+    class REINST_WBP_CreateRolePanel_C_9 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        BtnCreate: Button;
+        CheckBox_female: CheckBox;
+        CheckBox_male: CheckBox;
+        EditableTextBoxName: EditableTextBox;
+        Image_863: Image;
+        Image_998: Image;
+        Image_blank: Image;
+        Image_female: Image;
+        Image_male: Image;
+        ImgRole: Image;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_CreateRolePanel_C_9;
+        static Load(InName: string): REINST_WBP_CreateRolePanel_C_9;
     }
     
     class SKEL_PROTO_BP_AnimBlueprint_0_C extends AnimInstance {

@@ -1,8 +1,11 @@
 import {$ref, $unref, $set, argv, requestJitModuleMethod, makeUClass, blueprint} from 'puerts';
+import { createClass } from 'react';
 import * as UE from 'ue'
-
 import {TSGame} from "./App/TSGame"
+import { LoginPanel } from './UI/LoginPanel';
 
+import{EventDispatcher} from "./Utility/EventDispatcher"
+ 
 
 let GameInstance = argv.getByName("GameInstance") as UE.MyPreciousGameInstance;
 let Game : TSGame = new TSGame(GameInstance);
@@ -11,12 +14,37 @@ Game.Initialize();
 Game.Run();
 
 
+/*
+class EventTest{
+    _Array : Array<number>;
+    
+    constructor(){
+        this._Array = new Array<number>();
+        this._Array.push(100);
+        EventDispatcher.AddEventListener("TestA", this.TestA, this);
+    }
+
+    TestA(Params :any){
+        console.warn("array size:", this._Array.length);
+        console.warn(Params);
+        console.warn(Params.id);
+        console.warn(Params.Name);
+
+        EventDispatcher.RemoveEventListener("TestA", this.TestA, this);
+    }
+}
+
+let eventTest = new EventTest();
+ 
+let Params :any = {};
+Params.id = 1;
+Params.Name = "windknife"
+EventDispatcher.TriggerEvent("TestA", Params);
 
 
+EventDispatcher.TriggerEvent("TestA", Params);
 
-
-
-
+*/
 
 /*
 console.log("-----------------------Game Start-----------------------------");

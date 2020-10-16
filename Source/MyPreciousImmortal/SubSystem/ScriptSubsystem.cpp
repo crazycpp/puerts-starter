@@ -4,6 +4,19 @@
 #include "ScriptSubsystem.h"
 
 
+void UScriptSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+{
+	TickerDelegate = FTickerDelegate::CreateUObject(this, &UScriptSubsystem::Tick);
+}
+
+void UScriptSubsystem::Deinitialize()
+{
+	Super::Deinitialize();
+
+	GameScript.Reset();
+}
+
+
 void UScriptSubsystem::StartUpJSEnv()
 {
 	GameScript = MakeShared<puerts::FJsEnv>();
@@ -17,12 +30,13 @@ void UScriptSubsystem::StartUpJSEnv()
 	Arguments.Add(TPair<FString, UObject*>("Engine", GEngine));
 
 	GameScript->Start("Main", Arguments);
+
+	FTicker::GetCoreTicker().AddTicker(TickerDelegate);
 }
 
-void UScriptSubsystem::Deinitialize()
+bool UScriptSubsystem::Tick(float DeltaTime)
 {
-	Super::Deinitialize();
+	OnGameTick.ExecuteIfBound(DeltaTime);
 
-	GameScript.Reset();
+	return true;
 }
-

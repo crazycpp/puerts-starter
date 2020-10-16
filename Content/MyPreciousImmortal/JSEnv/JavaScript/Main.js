@@ -7,6 +7,37 @@ let Game = new TSGame_1.TSGame(GameInstance);
 Game.Initialize();
 Game.Run();
 /*
+class EventTest{
+    _Array : Array<number>;
+    
+    constructor(){
+        this._Array = new Array<number>();
+        this._Array.push(100);
+        EventDispatcher.AddEventListener("TestA", this.TestA, this);
+    }
+
+    TestA(Params :any){
+        console.warn("array size:", this._Array.length);
+        console.warn(Params);
+        console.warn(Params.id);
+        console.warn(Params.Name);
+
+        EventDispatcher.RemoveEventListener("TestA", this.TestA, this);
+    }
+}
+
+let eventTest = new EventTest();
+ 
+let Params :any = {};
+Params.id = 1;
+Params.Name = "windknife"
+EventDispatcher.TriggerEvent("TestA", Params);
+
+
+EventDispatcher.TriggerEvent("TestA", Params);
+
+*/
+/*
 console.log("-----------------------Game Start-----------------------------");
 
 

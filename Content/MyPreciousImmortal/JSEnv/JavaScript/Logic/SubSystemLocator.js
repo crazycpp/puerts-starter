@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubSystemLocator = void 0;
 const LoginSubSystem_1 = require("./SubSystem/LoginSubSystem");
-const UISubSystem_1 = require("./SubSystem/UISubSystem");
+const UISubSystem_1 = require("../UI/UISubSystem");
+const NetworkSubSystem_1 = require("./SubSystem/NetworkSubSystem");
+const CreateRoleSubSystem_1 = require("./SubSystem/CreateRoleSubSystem");
 // 这里先按朴素的方式实现，等进一步熟习TS了，引入语法糖来精简代码
 class SubSystemLocator {
     constructor() {
@@ -15,6 +17,11 @@ class SubSystemLocator {
         // construct the UISubSystem
         this._UISubSystem = new UISubSystem_1.UISubSystem();
         this._SubSystemArray.push(this._UISubSystem);
+        // construct the NetworkSubSystem
+        this._NetworkSystem = new NetworkSubSystem_1.NetworkSubSystem();
+        this._SubSystemArray.push(this._NetworkSystem);
+        this._CreateRoleSubSystem = new CreateRoleSubSystem_1.CreateRoleSubSystem();
+        this._SubSystemArray.push(this._CreateRoleSubSystem);
     }
     static Initialize() {
         this.constructorSubSystem();
@@ -29,6 +36,15 @@ class SubSystemLocator {
     }
     static GetLoginSubSystem() {
         return this._LoginSubSystem;
+    }
+    static GetUISubSystem() {
+        return this._UISubSystem;
+    }
+    static GetNetworkSubSystem() {
+        return this._NetworkSystem;
+    }
+    static GetCreateRoleSubSystem() {
+        return this._CreateRoleSubSystem;
     }
 }
 exports.SubSystemLocator = SubSystemLocator;

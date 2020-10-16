@@ -4,8 +4,6 @@
 #include "UpdateSubSystem.h"
 #include "ScriptSubsystem.h"
 #include "../Network/TCPConnector.h"
-#include "../Network/Protobuf/msg.pb.h"
-#include "../Network/Protobuf/proto_id.pb.h"
 
 
 void UUpdateSubSystem::Initialize(FSubsystemCollectionBase& Collection)

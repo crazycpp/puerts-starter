@@ -4,7 +4,7 @@
 #include "JsEnv.h"
 
 #include "CoreMinimal.h"
-#include "Subsystems/Subsystem.h"
+#include "Subsystems/GameInstanceSubsystem.h"
 #include "ScriptSubsystem.generated.h"
 
 

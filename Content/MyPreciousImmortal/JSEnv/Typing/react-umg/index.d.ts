@@ -1207,6 +1207,22 @@ export interface ReactWidgetProps extends UserWidgetProps {
 
 export class ReactWidget extends React.Component<ReactWidgetProps> {}
 
+export interface UIParticleProps extends WidgetProps {
+    EventOnEnd?: () => void;
+    bPlayParticle?: boolean;
+    IsPlaying?: boolean;
+}
+
+export class UIParticle extends React.Component<UIParticleProps> {}
+
+export interface UIParticleEmitterProps extends WidgetProps {
+    EventOnEnd?: () => void;
+    bPlayParticle?: boolean;
+    IsPlaying?: boolean;
+}
+
+export class UIParticleEmitter extends React.Component<UIParticleEmitterProps> {}
+
 export interface MovieRenderDebugWidgetProps extends UserWidgetProps {
 }
 
@@ -1295,17 +1311,21 @@ export interface SKEL_WBP_Lanucher_CProps extends UserWidgetProps {
 
 export class SKEL_WBP_Lanucher_C extends React.Component<SKEL_WBP_Lanucher_CProps> {}
 
-export interface WBP_LoginPanel_CProps extends UserWidgetProps {
+export interface WBP_CardPanel_CProps extends UserWidgetProps {
+}
+
+export class WBP_CardPanel_C extends React.Component<WBP_CardPanel_CProps> {}
+
+export interface SKEL_WBP_CardPanel_CProps extends UserWidgetProps {
     UberGraphFrame?: PointerToUberGraphFrame;
 }
 
-export class WBP_LoginPanel_C extends React.Component<WBP_LoginPanel_CProps> {}
+export class SKEL_WBP_CardPanel_C extends React.Component<SKEL_WBP_CardPanel_CProps> {}
 
-export interface SKEL_WBP_LoginPanel_CProps extends UserWidgetProps {
-    UberGraphFrame?: PointerToUberGraphFrame;
+export interface REINST_WBP_CardPanel_C_1Props extends UserWidgetProps {
 }
 
-export class SKEL_WBP_LoginPanel_C extends React.Component<SKEL_WBP_LoginPanel_CProps> {}
+export class REINST_WBP_CardPanel_C_1 extends React.Component<REINST_WBP_CardPanel_C_1Props> {}
 
 export interface WBP_CreateRolePanel_CProps extends UserWidgetProps {
 }
@@ -1318,10 +1338,124 @@ export interface SKEL_WBP_CreateRolePanel_CProps extends UserWidgetProps {
 
 export class SKEL_WBP_CreateRolePanel_C extends React.Component<SKEL_WBP_CreateRolePanel_CProps> {}
 
-export interface REINST_WBP_CreateRolePanel_C_9Props extends UserWidgetProps {
+export interface REINST_WBP_CreateRolePanel_C_2Props extends UserWidgetProps {
 }
 
-export class REINST_WBP_CreateRolePanel_C_9 extends React.Component<REINST_WBP_CreateRolePanel_C_9Props> {}
+export class REINST_WBP_CreateRolePanel_C_2 extends React.Component<REINST_WBP_CreateRolePanel_C_2Props> {}
+
+export interface WBP_GameMain_CProps extends UserWidgetProps {
+}
+
+export class WBP_GameMain_C extends React.Component<WBP_GameMain_CProps> {}
+
+export interface SKEL_WBP_GameMain_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_GameMain_C extends React.Component<SKEL_WBP_GameMain_CProps> {}
+
+export interface REINST_WBP_GameMain_C_3Props extends UserWidgetProps {
+}
+
+export class REINST_WBP_GameMain_C_3 extends React.Component<REINST_WBP_GameMain_C_3Props> {}
+
+export interface WBP_LoginPanel_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class WBP_LoginPanel_C extends React.Component<WBP_LoginPanel_CProps> {}
+
+export interface SKEL_WBP_LoginPanel_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_LoginPanel_C extends React.Component<SKEL_WBP_LoginPanel_CProps> {}
+
+export interface REINST_WBP_LoginPanel_C_4Props extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class REINST_WBP_LoginPanel_C_4 extends React.Component<REINST_WBP_LoginPanel_C_4Props> {}
+
+export interface WBP_MsgBox_CProps extends UserWidgetProps {
+}
+
+export class WBP_MsgBox_C extends React.Component<WBP_MsgBox_CProps> {}
+
+export interface SKEL_WBP_MsgBox_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_MsgBox_C extends React.Component<SKEL_WBP_MsgBox_CProps> {}
+
+export interface REINST_WBP_MsgBox_C_5Props extends UserWidgetProps {
+}
+
+export class REINST_WBP_MsgBox_C_5 extends React.Component<REINST_WBP_MsgBox_C_5Props> {}
+
+export interface WBP_PackagePanel_CProps extends UserWidgetProps {
+}
+
+export class WBP_PackagePanel_C extends React.Component<WBP_PackagePanel_CProps> {}
+
+export interface SKEL_WBP_PackagePanel_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_PackagePanel_C extends React.Component<SKEL_WBP_PackagePanel_CProps> {}
+
+export interface REINST_WBP_PackagePanel_C_6Props extends UserWidgetProps {
+}
+
+export class REINST_WBP_PackagePanel_C_6 extends React.Component<REINST_WBP_PackagePanel_C_6Props> {}
+
+export interface WBP_PetPanel_CProps extends UserWidgetProps {
+}
+
+export class WBP_PetPanel_C extends React.Component<WBP_PetPanel_CProps> {}
+
+export interface SKEL_WBP_PetPanel_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_PetPanel_C extends React.Component<SKEL_WBP_PetPanel_CProps> {}
+
+export interface REINST_WBP_PetPanel_C_7Props extends UserWidgetProps {
+}
+
+export class REINST_WBP_PetPanel_C_7 extends React.Component<REINST_WBP_PetPanel_C_7Props> {}
+
+export interface WBP_RoleDetail_CProps extends UserWidgetProps {
+}
+
+export class WBP_RoleDetail_C extends React.Component<WBP_RoleDetail_CProps> {}
+
+export interface SKEL_WBP_RoleDetail_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_RoleDetail_C extends React.Component<SKEL_WBP_RoleDetail_CProps> {}
+
+export interface REINST_WBP_RoleDetail_C_8Props extends UserWidgetProps {
+}
+
+export class REINST_WBP_RoleDetail_C_8 extends React.Component<REINST_WBP_RoleDetail_C_8Props> {}
+
+export interface WBP_RolePanel_CProps extends UserWidgetProps {
+}
+
+export class WBP_RolePanel_C extends React.Component<WBP_RolePanel_CProps> {}
+
+export interface SKEL_WBP_RolePanel_CProps extends UserWidgetProps {
+    UberGraphFrame?: PointerToUberGraphFrame;
+}
+
+export class SKEL_WBP_RolePanel_C extends React.Component<SKEL_WBP_RolePanel_CProps> {}
+
+export interface REINST_WBP_RolePanel_C_9Props extends UserWidgetProps {
+}
+
+export class REINST_WBP_RolePanel_C_9 extends React.Component<REINST_WBP_RolePanel_C_9Props> {}
 
 
 interface Root {

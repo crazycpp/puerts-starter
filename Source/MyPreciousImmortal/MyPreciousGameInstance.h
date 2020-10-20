@@ -7,11 +7,12 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "SubSystem/NetworkSubsystem.h"
+#include "SubSystem/ScriptSubsystem.h"
 #include "MyPreciousGameInstance.generated.h"
 
 
-
-MYPRECIOUSIMMORTAL_API UMyPreciousGameInstance* GGameInstance = nullptr;
+MYPRECIOUSIMMORTAL_API extern UMyPreciousGameInstance* MyPreciousGameInstancePtr;
 
 /**
  *
@@ -28,7 +29,7 @@ public:
 
 	virtual void Shutdown() override;
 
-
 	UFUNCTION(BlueprintCallable, Category = "SubSystem")
-		UWorld* GetCurrentWorld()const;
+	UWorld* GetCurrentWorld()const;
 };
+

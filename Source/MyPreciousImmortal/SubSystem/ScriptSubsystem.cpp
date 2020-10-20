@@ -27,7 +27,6 @@ void UScriptSubsystem::StartUpJSEnv()
 
 	TArray<TPair<FString, UObject*>> Arguments;
 	Arguments.Add(TPair<FString, UObject*>("GameInstance", this->GetGameInstance()));
-	Arguments.Add(TPair<FString, UObject*>("Engine", GEngine));
 
 	GameScript->Start("Main", Arguments);
 

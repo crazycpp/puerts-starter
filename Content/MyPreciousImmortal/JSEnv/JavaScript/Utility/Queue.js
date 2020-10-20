@@ -42,6 +42,9 @@ class Queue {
         }
         return result;
     }
+    Foreach(Callback) {
+        this.arr.forEach(Callback);
+    }
 }
 exports.Queue = Queue;
 //# sourceMappingURL=Queue.js.map

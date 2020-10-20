@@ -83,4 +83,8 @@ export class List<T>{
         }
         return result;
     }
+
+    public Foreach(Callback: (value: T, index: number, array: T[]) => void){
+        this.arr.forEach(Callback);
+    }
 }

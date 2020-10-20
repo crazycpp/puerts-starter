@@ -4,11 +4,11 @@
 
 UNetworkSubsystem* USubSystemUtil::GetNetworkSubSystem()
 {
-	return  GGameInstance->GetSubsystem<UNetworkSubsystem>();
+	return MyPreciousGameInstancePtr->GetSubsystem<UNetworkSubsystem>();
 }
 
 UScriptSubsystem* USubSystemUtil::GetScriptSubSystem()
 {
-	return GGameInstance->GetSubsystem<UScriptSubsystem>();
+	return MyPreciousGameInstancePtr->GetSubsystem<UScriptSubsystem>();
 }
 

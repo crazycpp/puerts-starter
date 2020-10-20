@@ -1,4 +1,4 @@
-import { BasePanel } from "./BasePanel";
+import { BasePanel, PanelLevelType } from "./BasePanel";
 import * as UE from "ue";
 import { SubSystemLocator } from "../Logic/SubSystemLocator";
 
@@ -10,6 +10,7 @@ export class CreateRolelanel extends BasePanel{
 
     constructor(){
         super();
+        this._PanelLevelType = PanelLevelType.HUD;
         let FileName = "WBP_CreateRolePanel";
         this.LoadUI(FileName);
         this.BindProperty();
@@ -22,7 +23,7 @@ export class CreateRolelanel extends BasePanel{
 
     OnClose(){
         console.warn("关闭登录界面");
-    }
+    } 
 
     BindProperty(){
         let CreateRolePanelBP = this._Widget as UE.WBP_CreateRolePanel_C;
@@ -35,8 +36,6 @@ export class CreateRolelanel extends BasePanel{
         this._Name = CreateRolePanelBP.EditableTextBoxName;
         this._FemaleCheckBox = CreateRolePanelBP.CheckBox_female;
         this._MaleCheckBox = CreateRolePanelBP.CheckBox_male;
-
-        this._Widget.AddToViewport(0);
     }
 
     OnBtnCreateClick(){

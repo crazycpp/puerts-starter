@@ -51060,6 +51060,14 @@ declare module "ue" {
         static Load(InName: string): MyPreciousImmortalGameModeBase;
     }
     
+    class ScriptSubsystem extends GameInstanceSubsystem {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnGameTick: $Delegate<(DeltaTime: number) => void>;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): ScriptSubsystem;
+        static Load(InName: string): ScriptSubsystem;
+    }
+    
     class NetworkSubsystem extends GameInstanceSubsystem {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         OnConnectedDelegate: $Delegate<() => void>;
@@ -51072,12 +51080,13 @@ declare module "ue" {
         static Load(InName: string): NetworkSubsystem;
     }
     
-    class ScriptSubsystem extends GameInstanceSubsystem {
+    class MyPreciousObject extends Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnGameTick: $Delegate<(DeltaTime: number) => void>;
+        GetScriptSubSystem(): ScriptSubsystem;
+        GetNetworkSubSystem(): NetworkSubsystem;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): ScriptSubsystem;
-        static Load(InName: string): ScriptSubsystem;
+        static Find(OrigInName: string, Outer?: Object): MyPreciousObject;
+        static Load(InName: string): MyPreciousObject;
     }
     
     class SubSystemUtil extends BlueprintFunctionLibrary {
@@ -53142,6 +53151,217 @@ declare module "ue" {
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): MagicLeapSharedWorldGameState;
         static Load(InName: string): MagicLeapSharedWorldGameState;
+    }
+    
+    enum EEmitterType { Gravity, Radial, Curve, EEmitterType_MAX}
+    enum EUIParticlePropertyType { Float, FloatRange, FloatCurve, FloatCurveRange, Vector2D, Vector2DRange, LinearColorCurve, LinearColorCurveRange, EUIParticlePropertyType_MAX}
+    class Range_Float {
+        constructor(Min: number, Max: number);
+        Min: number;
+        Max: number;
+    }
+    
+    enum ECurveType { ParticleLifePercent, ParticleLifeTime, EmitLifeTime, ECurveType_MAX}
+    class UIParticleFloatCurve {
+        constructor(CurveData: RichCurve, CurveType: ECurveType, Loop: boolean);
+        CurveData: RichCurve;
+        CurveType: ECurveType;
+        Loop: boolean;
+    }
+    
+    class Range_FloatCurve {
+        constructor(Min: UIParticleFloatCurve, Max: UIParticleFloatCurve);
+        Min: UIParticleFloatCurve;
+        Max: UIParticleFloatCurve;
+    }
+    
+    class Range_Vector2D {
+        constructor(Min: Vector2D, Max: Vector2D, RandomKey_X_Y: boolean);
+        Min: Vector2D;
+        Max: Vector2D;
+        RandomKey_X_Y: boolean;
+    }
+    
+    class UIParticleLinearColorCurve {
+        constructor(ColorCurves: FixSizeArray<RichCurve>, CurveType: ECurveType, Loop: boolean);
+        ColorCurves: FixSizeArray<RichCurve>;
+        CurveType: ECurveType;
+        Loop: boolean;
+    }
+    
+    class Range_LinearColorCurve {
+        constructor(Min: UIParticleLinearColorCurve, Max: UIParticleLinearColorCurve, RandomKey_R_G: boolean, RandomKey_R_B: boolean, RandomKey_R_A: boolean, RandomKey_G_B: boolean, RandomKey_G_A: boolean, RandomKey_B_A: boolean);
+        Min: UIParticleLinearColorCurve;
+        Max: UIParticleLinearColorCurve;
+        RandomKey_R_G: boolean;
+        RandomKey_R_B: boolean;
+        RandomKey_R_A: boolean;
+        RandomKey_G_B: boolean;
+        RandomKey_G_A: boolean;
+        RandomKey_B_A: boolean;
+    }
+    
+    class UIParticleProperty {
+        constructor(Type: EUIParticlePropertyType, FloatValue: number, FloatRangeValue: Range_Float, FloatCurveValue: UIParticleFloatCurve, FloatCurveRangeValue: Range_FloatCurve, Vector2DValue: Vector2D, Vector2DRangeValue: Range_Vector2D, LinearColorCurveValue: UIParticleLinearColorCurve, LinearColorCurveRangeValue: Range_LinearColorCurve);
+        Type: EUIParticlePropertyType;
+        FloatValue: number;
+        FloatRangeValue: Range_Float;
+        FloatCurveValue: UIParticleFloatCurve;
+        FloatCurveRangeValue: Range_FloatCurve;
+        Vector2DValue: Vector2D;
+        Vector2DRangeValue: Range_Vector2D;
+        LinearColorCurveValue: UIParticleLinearColorCurve;
+        LinearColorCurveRangeValue: Range_LinearColorCurve;
+    }
+    
+    class Posotion_Vector2DCurve {
+        constructor(X: UIParticleProperty, Y: UIParticleProperty);
+        X: UIParticleProperty;
+        Y: UIParticleProperty;
+    }
+    
+    enum EPositionType { FREE, RELATIVE, EPositionType_MAX}
+    class ChildEmitter {
+        constructor(ActivityInParentLifeTime: number, FollowParentPosition: boolean, FollowParentSpeedPercent: number, ZOrderOffset: number, ChildrenAsset: UIParticleEmitterAsset);
+        ActivityInParentLifeTime: number;
+        FollowParentPosition: boolean;
+        FollowParentSpeedPercent: number;
+        ZOrderOffset: number;
+        ChildrenAsset: UIParticleEmitterAsset;
+    }
+    
+    class ScalarParamCurve {
+        constructor(ScalarParamName: string, Value: UIParticleProperty);
+        ScalarParamName: string;
+        Value: UIParticleProperty;
+    }
+    
+    enum EParticleDrawEffect { None, NoBlending, PreMultipliedAlpha, NoGamma, InvertAlpha, NoPixelSnapping, DisabledEffect, IgnoreTextureAlpha, ReverseGamma, EParticleDrawEffect_MAX}
+    class UIParticleEmitterAsset extends Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        AutoPlay: boolean;
+        StartTimeOffset: number;
+        SamplingTimes: number;
+        EmitterType: EEmitterType;
+        EmitSeconds: number;
+        MaxParticleCount: UIParticleProperty;
+        SpawnParticlePerSecond: UIParticleProperty;
+        ParticleEmitAngle: UIParticleProperty;
+        EmitPosRange: Range_Vector2D;
+        EmitPosition: Posotion_Vector2DCurve;
+        AutoEmitPosRange: boolean;
+        AutoScale: boolean;
+        ScaleByX: boolean;
+        DesignSize: Vector2D;
+        EmitAngleByWidgetAngle: boolean;
+        PositionType: EPositionType;
+        LifeSpan: UIParticleProperty;
+        Size: UIParticleProperty;
+        Pivot: UIParticleProperty;
+        RotationStart: UIParticleProperty;
+        RotationSpeed: UIParticleProperty;
+        Color: UIParticleProperty;
+        ResourceObject: Object;
+        RotationFollowSpeed: boolean;
+        UseSeparateSize: boolean;
+        Gravity: UIParticleProperty;
+        StartSpeed: UIParticleProperty;
+        AirResistance: UIParticleProperty;
+        RadialAcceleration: UIParticleProperty;
+        TangentialAcceleration: UIParticleProperty;
+        Radius: UIParticleProperty;
+        DegreePerSecond: UIParticleProperty;
+        PositionX: UIParticleProperty;
+        PositionY: UIParticleProperty;
+        ChildrenEmitters: TArray<ChildEmitter>;
+        ScalarParams: TArray<ScalarParamCurve>;
+        ScalarParamsWhenStart: TArray<ScalarParamCurve>;
+        DrawEffect: EParticleDrawEffect;
+        UseScaleFollowSpeedDirection: boolean;
+        ScaleFollowSpeedDirection: UIParticleProperty;
+        UseScaleFollowSpeedVertical: boolean;
+        ScaleFollowSpeedVertical: UIParticleProperty;
+        DirectionScale: UIParticleProperty;
+        VerticalDirectionScale: UIParticleProperty;
+        SineDirectionStart: UIParticleProperty;
+        SineDirectionSpeed: UIParticleProperty;
+        SineDirectionRange: UIParticleProperty;
+        LevelOfDetail: TArray<UIParticleEmitterAsset>;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UIParticleEmitterAsset;
+        static Load(InName: string): UIParticleEmitterAsset;
+    }
+    
+    class UIParticleEmitterInfo {
+        constructor(Disable: boolean, ActiveDelay: number, ZOrder: number, Asset: UIParticleEmitterAsset);
+        Disable: boolean;
+        ActiveDelay: number;
+        ZOrder: number;
+        Asset: UIParticleEmitterAsset;
+    }
+    
+    class UIParticleAsset extends Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        AutoPlay: boolean;
+        Emitters: TArray<UIParticleEmitterInfo>;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UIParticleAsset;
+        static Load(InName: string): UIParticleAsset;
+    }
+    
+    class UIParticle extends Widget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Asset: UIParticleAsset;
+        EventOnEnd: $MulticastDelegate<() => void>;
+        bPlayParticle: boolean;
+        IsPlaying: boolean;
+        StopEmit(): void;
+        Stop(): void;
+        SetPlayParticle(InPlayParticle: boolean): void;
+        Play(): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UIParticle;
+        static Load(InName: string): UIParticle;
+    }
+    
+    class UIParticleEmitter extends Widget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Asset: UIParticleEmitterAsset;
+        EventOnEnd: $MulticastDelegate<() => void>;
+        bPlayParticle: boolean;
+        IsPlaying: boolean;
+        StopEmit(): void;
+        Stop(): void;
+        SetPlayParticle(InPlayParticle: boolean): void;
+        Play(): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UIParticleEmitter;
+        static Load(InName: string): UIParticleEmitter;
+    }
+    
+    class UIParticleUtility extends Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static SetMultiThread(value: boolean): void;
+        static SetLOD(newlod: number): void;
+        static GetMultiThread(): boolean;
+        static GetLOD(): number;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UIParticleUtility;
+        static Load(InName: string): UIParticleUtility;
+    }
+    
+    class UIParticleAssetFactory extends Factory {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UIParticleAssetFactory;
+        static Load(InName: string): UIParticleAssetFactory;
+    }
+    
+    class UIParticleLeafAssetFactory extends Factory {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UIParticleLeafAssetFactory;
+        static Load(InName: string): UIParticleLeafAssetFactory;
     }
     
     class ImgMediaSettings extends Object {
@@ -57348,117 +57568,74 @@ declare module "ue" {
         static Load(InName: string): SKEL_LevelEditorOverview_C;
     }
     
-    class SKEL_ActorMacros_C extends Actor {
+    class TRASHCLASS_WBP_CardPanel_4 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_ActorMacros_C;
-        static Load(InName: string): SKEL_ActorMacros_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_CardPanel_4;
+        static Load(InName: string): TRASHCLASS_WBP_CardPanel_4;
     }
     
-    class StandardMacros_C extends Object {
+    class TRASHCLASS_WBP_CreateRolePanel_5 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): StandardMacros_C;
-        static Load(InName: string): StandardMacros_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_CreateRolePanel_5;
+        static Load(InName: string): TRASHCLASS_WBP_CreateRolePanel_5;
     }
     
-    class SKEL_StandardMacros_C extends Object {
+    class TRASHCLASS_WBP_GameMain_6 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_StandardMacros_C;
-        static Load(InName: string): SKEL_StandardMacros_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_GameMain_6;
+        static Load(InName: string): TRASHCLASS_WBP_GameMain_6;
     }
     
-    class Tutorial_BP_MacroLib_C extends EditorTutorial {
+    class TRASHCLASS_WBP_LoginPanel_7 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): Tutorial_BP_MacroLib_C;
-        static Load(InName: string): Tutorial_BP_MacroLib_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_LoginPanel_7;
+        static Load(InName: string): TRASHCLASS_WBP_LoginPanel_7;
     }
     
-    class SKEL_Tutorial_BP_MacroLib_C extends EditorTutorial {
+    class TRASHCLASS_WBP_MsgBox_8 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_Tutorial_BP_MacroLib_C;
-        static Load(InName: string): SKEL_Tutorial_BP_MacroLib_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_MsgBox_8;
+        static Load(InName: string): TRASHCLASS_WBP_MsgBox_8;
     }
     
-    class RenderToTextureFunctionLibrary_C extends BlueprintFunctionLibrary {
+    class TRASHCLASS_WBP_PackagePanel_9 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static SetCanvasMaterialScaleandPosition(Size: Vector2D, Position: Vector2D, Scale: number, __WorldContext: Object, ScreenPosition: $Ref<Vector2D>, ScreenSize: $Ref<Vector2D>): void;
-        static ArraytoHLSLIntArray(Type: number, VariableName: $Ref<string>, int: $Ref<TArray<number>>, int2: $Ref<TArray<Vector2D>>, int3: $Ref<TArray<Vector>>, int4: $Ref<TArray<LinearColor>>, __WorldContext: Object, String: $Ref<string>): void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): RenderToTextureFunctionLibrary_C;
-        static Load(InName: string): RenderToTextureFunctionLibrary_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_PackagePanel_9;
+        static Load(InName: string): TRASHCLASS_WBP_PackagePanel_9;
     }
     
-    class SKEL_RenderToTextureFunctionLibrary_C extends BlueprintFunctionLibrary {
+    class TRASHCLASS_WBP_PetPanel_10 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static ArraytoHLSLIntArray(Type: number, VariableName: $Ref<string>, int: $Ref<TArray<number>>, int2: $Ref<TArray<Vector2D>>, int3: $Ref<TArray<Vector>>, int4: $Ref<TArray<LinearColor>>, __WorldContext: Object, String: $Ref<string>): void;
-        static SetCanvasMaterialScaleandPosition(Size: Vector2D, Position: Vector2D, Scale: number, __WorldContext: Object, ScreenPosition: $Ref<Vector2D>, ScreenSize: $Ref<Vector2D>): void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_RenderToTextureFunctionLibrary_C;
-        static Load(InName: string): SKEL_RenderToTextureFunctionLibrary_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_PetPanel_10;
+        static Load(InName: string): TRASHCLASS_WBP_PetPanel_10;
     }
     
-    class PROTO_BP_Blueprint_0_C extends Actor {
+    class TRASHCLASS_WBP_RoleDetail_11 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        DefaultSceneRoot: SceneComponent;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): PROTO_BP_Blueprint_0_C;
-        static Load(InName: string): PROTO_BP_Blueprint_0_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_RoleDetail_11;
+        static Load(InName: string): TRASHCLASS_WBP_RoleDetail_11;
     }
     
-    class SKEL_PROTO_BP_Blueprint_0_C extends Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        UberGraphFrame: PointerToUberGraphFrame;
-        DefaultSceneRoot: SceneComponent;
-        UserConstructionScript(): void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_PROTO_BP_Blueprint_0_C;
-        static Load(InName: string): SKEL_PROTO_BP_Blueprint_0_C;
-    }
-    
-    class RenderToTextureMacros_C extends Actor {
+    class TRASHCLASS_WBP_RolePanel_12 {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): RenderToTextureMacros_C;
-        static Load(InName: string): RenderToTextureMacros_C;
-    }
-    
-    class SKEL_RenderToTextureMacros_C extends Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_RenderToTextureMacros_C;
-        static Load(InName: string): SKEL_RenderToTextureMacros_C;
-    }
-    
-    class BlueprintEditorTutorial_C extends EditorTutorial {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): BlueprintEditorTutorial_C;
-        static Load(InName: string): BlueprintEditorTutorial_C;
-    }
-    
-    class SKEL_BlueprintEditorTutorial_C extends EditorTutorial {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        UberGraphFrame: PointerToUberGraphFrame;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_BlueprintEditorTutorial_C;
-        static Load(InName: string): SKEL_BlueprintEditorTutorial_C;
-    }
-    
-    class ActorMacros_C extends Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): ActorMacros_C;
-        static Load(InName: string): ActorMacros_C;
+        static Find(OrigInName: string, Outer?: Object): TRASHCLASS_WBP_RolePanel_12;
+        static Load(InName: string): TRASHCLASS_WBP_RolePanel_12;
     }
     
     class WBP_Lanucher_C extends UserWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         UberGraphFrame: PointerToUberGraphFrame;
         ProgressBar_299: ProgressBar;
+        PreConstruct(IsDesignTime: boolean): void;
         Construct(): void;
         ExecuteUbergraph_WBP_Lanucher(EntryPoint: number): void;
         static StaticClass(): Class;
@@ -57478,33 +57655,29 @@ declare module "ue" {
         static Load(InName: string): SKEL_WBP_Lanucher_C;
     }
     
-    class WBP_LoginPanel_C extends UserWidget {
+    class WBP_CardPanel_C extends UserWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        UberGraphFrame: PointerToUberGraphFrame;
-        Account: EditableTextBox;
-        BtnLogin: Button;
-        EditableText_201: EditableText;
-        HostAddress: EditableTextBox;
-        Port: EditableTextBox;
-        BndEvt__BtnLogin_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature(): void;
-        ExecuteUbergraph_WBP_LoginPanel(EntryPoint: number): void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): WBP_LoginPanel_C;
-        static Load(InName: string): WBP_LoginPanel_C;
+        static Find(OrigInName: string, Outer?: Object): WBP_CardPanel_C;
+        static Load(InName: string): WBP_CardPanel_C;
     }
     
-    class SKEL_WBP_LoginPanel_C extends UserWidget {
+    class SKEL_WBP_CardPanel_C extends UserWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         UberGraphFrame: PointerToUberGraphFrame;
-        Account: EditableTextBox;
-        BtnLogin: Button;
-        EditableText_201: EditableText;
-        HostAddress: EditableTextBox;
-        Port: EditableTextBox;
-        BndEvt__BtnLogin_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature(): void;
+        PreConstruct(IsDesignTime: boolean): void;
+        Construct(): void;
+        Tick(MyGeometry: Geometry, InDeltaTime: number): void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_LoginPanel_C;
-        static Load(InName: string): SKEL_WBP_LoginPanel_C;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_CardPanel_C;
+        static Load(InName: string): SKEL_WBP_CardPanel_C;
+    }
+    
+    class REINST_WBP_CardPanel_C_1 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_CardPanel_C_1;
+        static Load(InName: string): REINST_WBP_CardPanel_C_1;
     }
     
     class WBP_CreateRolePanel_C extends UserWidget {
@@ -57538,41 +57711,237 @@ declare module "ue" {
         static Load(InName: string): SKEL_WBP_CreateRolePanel_C;
     }
     
-    class REINST_WBP_CreateRolePanel_C_9 extends UserWidget {
+    class REINST_WBP_CreateRolePanel_C_2 extends UserWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         BtnCreate: Button;
         CheckBox_female: CheckBox;
         CheckBox_male: CheckBox;
         EditableTextBoxName: EditableTextBox;
-        Image_863: Image;
-        Image_998: Image;
         Image_blank: Image;
         Image_female: Image;
         Image_male: Image;
         ImgRole: Image;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): REINST_WBP_CreateRolePanel_C_9;
-        static Load(InName: string): REINST_WBP_CreateRolePanel_C_9;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_CreateRolePanel_C_2;
+        static Load(InName: string): REINST_WBP_CreateRolePanel_C_2;
     }
     
-    class SKEL_PROTO_BP_AnimBlueprint_0_C extends AnimInstance {
+    class WBP_GameMain_C extends UserWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        UberGraphFrame: PointerToUberGraphFrame;
-        AnimGraph(AnimGraph: $Ref<PoseLink>): void;
+        PackageBtn: Button;
+        PetBtn: Button;
+        RoleBtn: Button;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SKEL_PROTO_BP_AnimBlueprint_0_C;
-        static Load(InName: string): SKEL_PROTO_BP_AnimBlueprint_0_C;
+        static Find(OrigInName: string, Outer?: Object): WBP_GameMain_C;
+        static Load(InName: string): WBP_GameMain_C;
     }
     
-    class PROTO_BP_AnimBlueprint_0_C extends AnimInstance {
+    class SKEL_WBP_GameMain_C extends UserWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         UberGraphFrame: PointerToUberGraphFrame;
-        AnimGraphNode_Root: AnimNode_Root;
-        AnimGraph(AnimGraph: $Ref<PoseLink>): void;
-        ExecuteUbergraph_PROTO_BP_AnimBlueprint_0(EntryPoint: number): void;
+        PackageBtn: Button;
+        PetBtn: Button;
+        RoleBtn: Button;
+        PreConstruct(IsDesignTime: boolean): void;
+        Construct(): void;
+        Tick(MyGeometry: Geometry, InDeltaTime: number): void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): PROTO_BP_AnimBlueprint_0_C;
-        static Load(InName: string): PROTO_BP_AnimBlueprint_0_C;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_GameMain_C;
+        static Load(InName: string): SKEL_WBP_GameMain_C;
+    }
+    
+    class REINST_WBP_GameMain_C_3 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        PackageBtn: Button;
+        PetBtn: Button;
+        RoleBtn: Button;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_GameMain_C_3;
+        static Load(InName: string): REINST_WBP_GameMain_C_3;
+    }
+    
+    class WBP_LoginPanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        Account: EditableTextBox;
+        BtnLogin: Button;
+        EditableText_201: EditableText;
+        HostAddress: EditableTextBox;
+        Port: EditableTextBox;
+        BndEvt__BtnLogin_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature(): void;
+        ExecuteUbergraph_WBP_LoginPanel(EntryPoint: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WBP_LoginPanel_C;
+        static Load(InName: string): WBP_LoginPanel_C;
+    }
+    
+    class SKEL_WBP_LoginPanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        Account: EditableTextBox;
+        BtnLogin: Button;
+        EditableText_201: EditableText;
+        HostAddress: EditableTextBox;
+        Port: EditableTextBox;
+        BndEvt__BtnLogin_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature(): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_LoginPanel_C;
+        static Load(InName: string): SKEL_WBP_LoginPanel_C;
+    }
+    
+    class REINST_WBP_LoginPanel_C_4 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        Account: EditableTextBox;
+        BtnLogin: Button;
+        EditableText_201: EditableText;
+        HostAddress: EditableTextBox;
+        Port: EditableTextBox;
+        BndEvt__BtnLogin_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature(): void;
+        ExecuteUbergraph_WBP_LoginPanel(EntryPoint: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_LoginPanel_C_4;
+        static Load(InName: string): REINST_WBP_LoginPanel_C_4;
+    }
+    
+    class WBP_MsgBox_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WBP_MsgBox_C;
+        static Load(InName: string): WBP_MsgBox_C;
+    }
+    
+    class SKEL_WBP_MsgBox_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        PreConstruct(IsDesignTime: boolean): void;
+        Construct(): void;
+        Tick(MyGeometry: Geometry, InDeltaTime: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_MsgBox_C;
+        static Load(InName: string): SKEL_WBP_MsgBox_C;
+    }
+    
+    class REINST_WBP_MsgBox_C_5 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_MsgBox_C_5;
+        static Load(InName: string): REINST_WBP_MsgBox_C_5;
+    }
+    
+    class WBP_PackagePanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WBP_PackagePanel_C;
+        static Load(InName: string): WBP_PackagePanel_C;
+    }
+    
+    class SKEL_WBP_PackagePanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        PreConstruct(IsDesignTime: boolean): void;
+        Construct(): void;
+        Tick(MyGeometry: Geometry, InDeltaTime: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_PackagePanel_C;
+        static Load(InName: string): SKEL_WBP_PackagePanel_C;
+    }
+    
+    class REINST_WBP_PackagePanel_C_6 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_PackagePanel_C_6;
+        static Load(InName: string): REINST_WBP_PackagePanel_C_6;
+    }
+    
+    class WBP_PetPanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CloseBtn: Button;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WBP_PetPanel_C;
+        static Load(InName: string): WBP_PetPanel_C;
+    }
+    
+    class SKEL_WBP_PetPanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        CloseBtn: Button;
+        PreConstruct(IsDesignTime: boolean): void;
+        Construct(): void;
+        Tick(MyGeometry: Geometry, InDeltaTime: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_PetPanel_C;
+        static Load(InName: string): SKEL_WBP_PetPanel_C;
+    }
+    
+    class REINST_WBP_PetPanel_C_7 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Button_50: Button;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_PetPanel_C_7;
+        static Load(InName: string): REINST_WBP_PetPanel_C_7;
+    }
+    
+    class WBP_RoleDetail_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CloseBtn: Button;
+        LinkToPet: Button;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WBP_RoleDetail_C;
+        static Load(InName: string): WBP_RoleDetail_C;
+    }
+    
+    class SKEL_WBP_RoleDetail_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        CloseBtn: Button;
+        LinkToPet: Button;
+        PreConstruct(IsDesignTime: boolean): void;
+        Construct(): void;
+        Tick(MyGeometry: Geometry, InDeltaTime: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_RoleDetail_C;
+        static Load(InName: string): SKEL_WBP_RoleDetail_C;
+    }
+    
+    class REINST_WBP_RoleDetail_C_8 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CloseBtn: Button;
+        LinkToPet: Button;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_RoleDetail_C_8;
+        static Load(InName: string): REINST_WBP_RoleDetail_C_8;
+    }
+    
+    class WBP_RolePanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CloseBtn: Button;
+        RoleDetail: Button;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WBP_RolePanel_C;
+        static Load(InName: string): WBP_RolePanel_C;
+    }
+    
+    class SKEL_WBP_RolePanel_C extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        UberGraphFrame: PointerToUberGraphFrame;
+        CloseBtn: Button;
+        RoleDetail: Button;
+        PreConstruct(IsDesignTime: boolean): void;
+        Construct(): void;
+        Tick(MyGeometry: Geometry, InDeltaTime: number): void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SKEL_WBP_RolePanel_C;
+        static Load(InName: string): SKEL_WBP_RolePanel_C;
+    }
+    
+    class REINST_WBP_RolePanel_C_9 extends UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Button_98: Button;
+        Button_171: Button;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): REINST_WBP_RolePanel_C_9;
+        static Load(InName: string): REINST_WBP_RolePanel_C_9;
     }
     
 }

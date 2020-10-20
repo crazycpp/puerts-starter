@@ -19,6 +19,11 @@
 			"Name": "RichTextBlockInlineDecorator",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/e3be7a5e9bb445eb92b54a2ab8571b07"
+		},
+		{
+			"Name": "UIParticle",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/6739822882cf45e6a06900c58f035059"
 		}
 	]
 }

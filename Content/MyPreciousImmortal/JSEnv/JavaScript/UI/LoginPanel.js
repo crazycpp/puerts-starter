@@ -6,6 +6,7 @@ const BasePanel_1 = require("./BasePanel");
 class LoginPanel extends BasePanel_1.BasePanel {
     constructor() {
         super();
+        this._PanelLevelType = BasePanel_1.PanelLevelType.HUD;
         let FileName = "WBP_LoginPanel";
         this.LoadUI(FileName);
         this.BindProperty();
@@ -16,7 +17,6 @@ class LoginPanel extends BasePanel_1.BasePanel {
         this._Account = LoginBP.Account;
         this._Host = LoginBP.HostAddress;
         this._Port = LoginBP.Port;
-        this._Widget.AddToViewport(0);
     }
     OnLoginBtnClick() {
         console.warn("host:", this._Host.GetText());

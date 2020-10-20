@@ -3,10 +3,13 @@
 
 #include "MyPreciousGameInstance.h"
 
+
+UMyPreciousGameInstance* MyPreciousGameInstancePtr;
+
 void UMyPreciousGameInstance::Init()
 {
-	Super::Init();
-	GGameInstance = this;
+	Super::Init();	
+	MyPreciousGameInstancePtr = this;
 }
 
 void UMyPreciousGameInstance::OnStart()
@@ -16,12 +19,10 @@ void UMyPreciousGameInstance::OnStart()
 
 void UMyPreciousGameInstance::Shutdown()
 {
-
 }
 
 UWorld* UMyPreciousGameInstance::GetCurrentWorld()const {
 	return this->GetWorld();
 }
-
 
 

@@ -70,6 +70,9 @@ class List {
         }
         return result;
     }
+    Foreach(Callback) {
+        this.arr.forEach(Callback);
+    }
 }
 exports.List = List;
 //# sourceMappingURL=List.js.map

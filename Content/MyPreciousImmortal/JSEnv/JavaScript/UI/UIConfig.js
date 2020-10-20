@@ -7,6 +7,11 @@ var UIType;
 (function (UIType) {
     UIType[UIType["LOGIN"] = 0] = "LOGIN";
     UIType[UIType["CreateRole"] = 1] = "CreateRole";
+    UIType[UIType["GameMain"] = 2] = "GameMain";
+    UIType[UIType["RolePanel"] = 3] = "RolePanel";
+    UIType[UIType["RoleDetail"] = 4] = "RoleDetail";
+    UIType[UIType["PackagePanel"] = 5] = "PackagePanel";
+    UIType[UIType["PetPanel"] = 6] = "PetPanel";
 })(UIType = exports.UIType || (exports.UIType = {}));
 class UIConfig {
     static GetUIResName(Type) {

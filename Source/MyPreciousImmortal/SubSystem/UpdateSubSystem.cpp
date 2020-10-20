@@ -4,6 +4,7 @@
 #include "UpdateSubSystem.h"
 #include "ScriptSubsystem.h"
 #include "../Network/TCPConnector.h"
+#include "Engine/GameInstance.h"
 
 
 void UUpdateSubSystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -18,5 +19,6 @@ void UUpdateSubSystem::CheckUpdate()
 
 void UUpdateSubSystem::OnUpdateCompleted()
 {
+	// 下面这行代码无法通过移动端版本编译
 	GetGameInstance()->GetSubsystem<UScriptSubsystem>()->StartUpJSEnv();
 }

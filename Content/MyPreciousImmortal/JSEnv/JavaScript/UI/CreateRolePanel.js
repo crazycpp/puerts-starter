@@ -7,6 +7,7 @@ const SubSystemLocator_1 = require("../Logic/SubSystemLocator");
 class CreateRolelanel extends BasePanel_1.BasePanel {
     constructor() {
         super();
+        this._PanelLevelType = BasePanel_1.PanelLevelType.HUD;
         let FileName = "WBP_CreateRolePanel";
         this.LoadUI(FileName);
         this.BindProperty();
@@ -27,7 +28,6 @@ class CreateRolelanel extends BasePanel_1.BasePanel {
         this._Name = CreateRolePanelBP.EditableTextBoxName;
         this._FemaleCheckBox = CreateRolePanelBP.CheckBox_female;
         this._MaleCheckBox = CreateRolePanelBP.CheckBox_male;
-        this._Widget.AddToViewport(0);
     }
     OnBtnCreateClick() {
         SubSystemLocator_1.SubSystemLocator.GetCreateRoleSubSystem().CreateRole(this._Name.GetText());

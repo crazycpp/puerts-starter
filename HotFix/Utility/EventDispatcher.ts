@@ -70,7 +70,7 @@ export class EventDispatcher {
         Data = Data || {};
 
         let name = EventName;
-        Data.eventName = name; //保存一下事件名字
+        //Data.eventName = name; //保存一下事件名字
 
         if (this._EventHandlerMap[EventName] && this._EventHandlerMap[EventName].length > 0) {
             for (var i = 0; i < this._EventHandlerMap[EventName].length; i++) {

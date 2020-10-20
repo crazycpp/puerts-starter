@@ -2,22 +2,24 @@ import {$ref, $unref, $set, argv, requestJitModuleMethod, makeUClass, blueprint}
 import * as UE from 'ue'
 import { TSGame } from '../App/TSGame';
 import { SubSystemLocator } from '../Logic/SubSystemLocator';
-import {BasePanel} from "./BasePanel";
+import {BasePanel, PanelLevelType} from "./BasePanel";
 
 export class LoginPanel extends BasePanel{
 
-    private _Account : UE.EditableTextBox;
 
+
+    private _Account : UE.EditableTextBox;
     private _Host : UE.EditableTextBox;
     private _Port : UE.EditableTextBox;
     
     constructor(){
         super();
+        this._PanelLevelType = PanelLevelType.HUD;
         let FileName = "WBP_LoginPanel";
         this.LoadUI(FileName);
         this.BindProperty();
     }
-
+ 
     BindProperty(){
         let LoginBP = this._Widget as UE.WBP_LoginPanel_C;
 
@@ -26,15 +28,14 @@ export class LoginPanel extends BasePanel{
         this._Account = LoginBP.Account;
         this._Host = LoginBP.HostAddress;
         this._Port = LoginBP.Port;
-
-        this._Widget.AddToViewport(0);
+    
     }
 
 
     OnLoginBtnClick(){
 
         console.warn("host:", this._Host.GetText());
-        console.warn("port", this._Port.GetText())
+        console.warn("port", this._Port.GetText());
 
         SubSystemLocator.GetLoginSubSystem().Login(this._Host.GetText(), Number(this._Port.GetText()), this._Account.GetText());
     }

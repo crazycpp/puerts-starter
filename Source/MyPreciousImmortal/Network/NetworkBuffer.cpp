@@ -80,7 +80,8 @@ void FNetworkBuffer::RemoveData(unsigned int size) {
 void FNetworkBuffer::ReAllocBuffer(const unsigned int dataLength) {
 	// 如果缓冲区超过最大缓冲值，发出警告
 	if (_bufferSize >= MAX_SIZE) {
-		std::cout << "Buffer::Realloc except!! Max size:" << _bufferSize << std::endl;
+		//std::cout << "Buffer::Realloc except!! Max size:" << _bufferSize << std::endl;
+		UE_LOG(LogTemp, Warning, TEXT("Buffer::Realloc except!! Max size:%d"), _bufferSize);
 	}
 
 	uint8* tempBuffer = new uint8[_bufferSize + ADDITIONAL_SIZE];

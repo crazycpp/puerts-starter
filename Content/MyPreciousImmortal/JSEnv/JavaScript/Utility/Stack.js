@@ -39,6 +39,9 @@ class Stack {
         }
         return result;
     }
+    Foreach(Callback) {
+        this.arr.forEach(Callback);
+    }
 }
 exports.Stack = Stack;
 //# sourceMappingURL=Stack.js.map

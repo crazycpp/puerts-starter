@@ -8,17 +8,17 @@ public class MyPreciousImmortal : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "JsEnv", "UMG", "Sockets", "Networking", "NavigationSystem", "AIModule", "Json" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "Sockets", "Networking", "NavigationSystem", "AIModule", "Json" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 		// all plugin within this project.
-		PublicDependencyModuleNames.AddRange(new string[] {"JsEnv", "RichTextBlockInlineDecorator" });
+		PublicDependencyModuleNames.AddRange(new string[] {"JsEnv", "RichTextBlockInlineDecorator", "UIParticle" });
 
 		bEnableUndefinedIdentifierWarnings = false;
 
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+		//PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 	
 		
 		// Uncomment if you are using online features
